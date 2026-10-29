@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_wgu_tugas" model="ir.sequence">
+        <field name="name">Penugasan Baca Meter WGU</field>
+        <field name="code">wgu.tugas</field>
+        <field name="prefix">TGS/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="view_wgu_tugas_tree" model="ir.ui.view">
+        <field name="name">wgu.tugas.tree</field>
+        <field name="model">wgu.tugas</field>
+        <field name="arch" type="xml">
+            <tree string="Penugasan Baca Meter" decoration-danger="state == 'batal'" decoration-success="state == 'selesai'" decoration-warning="state == 'baru'">
+                <field name="name"/>
+                <field name="tanggal"/>
+                <field name="pelanggan_id"/>
+                <field name="petugas_id"/>
+                <field name="wilayah"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_wgu_tugas_form" model="ir.ui.view">
+        <field name="name">wgu.tugas.form</field>
+        <field name="model">wgu.tugas</field>
+        <field name="arch" type="xml">
+            <form string="Penugasan Baca Meter">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="pelanggan_id"/>
+                        <field name="petugas_id"/>
+                        <field name="wilayah"/>
+                        <field name="tanggal"/>
+                        <field name="state"/>
+                        <field name="bacaan_id"/>
+                        <field name="catatan"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_wgu_tugas_search" model="ir.ui.view">
+        <field name="name">wgu.tugas.search</field>
+        <field name="model">wgu.tugas</field>
+        <field name="arch" type="xml">
+            <search string="Penugasan Baca Meter">
+                <field name="name"/>
+                <field name="pelanggan_id"/>
+                <field name="petugas_id"/>
+                <field name="wilayah"/>
+                <filter name="filter_state_baru" string="Baru" domain="[('state','=','baru')]"/>
+                <filter name="filter_state_selesai" string="Selesai" domain="[('state','=','selesai')]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_petugas" string="Petugas" context="{'group_by': 'petugas_id'}"/>
+                    <filter name="group_wilayah" string="Wilayah" context="{'group_by': 'wilayah'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_wgu_buat_tugas_wizard_form" model="ir.ui.view">
+        <field name="name">wgu.buat.tugas.wizard.form</field>
+        <field name="model">wgu.buat.tugas.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Buat Tugas Baca Meter">
+                <sheet>
+                    <group>
+                        <field name="pelanggan_ids" widget="many2many_tags"/>
+                        <field name="wilayah"/>
+                        <field name="petugas_id"/>
+                        <field name="tanggal"/>
+                        <field name="catatan"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_buat_tugas" type="object" string="Buat Tugas" class="btn-primary"/>
+                    <button string="Batal" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wgu_tugas" model="ir.actions.act_window">
+        <field name="name">Penugasan Lapangan</field>
+        <field name="res_model">wgu.tugas</field>
+        <field name="view_mode">tree,form,search</field>
+    </record>
+
+    <record id="action_wgu_buat_tugas_wizard" model="ir.actions.act_window">
+        <field name="name">Buat Tugas Baca Meter</field>
+        <field name="res_model">wgu.buat.tugas.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_wgu_buat_tugas_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_wgu_tugas"
+              name="Penugasan Lapangan"
+              parent="menu_wgu_root"
+              sequence="16"
+              action="action_wgu_tugas"/>
+</odoo>

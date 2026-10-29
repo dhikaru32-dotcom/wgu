@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================
+         HALAMAN BACKEND NYATA #2: CHEMICAL SUPPLY (sequence 20)
+         Model kustom wgu.chemical terikat ekosistem resmi Odoo:
+         supplier -> res.partner, stok -> product.template (Inventory).
+         ============================================================ -->
+    <record id="view_wgu_chemical_tree" model="ir.ui.view">
+        <field name="name">wgu.chemical.tree</field>
+        <field name="model">wgu.chemical</field>
+        <field name="arch" type="xml">
+            <tree string="Inventory Bahan Kimia WGU" decoration-warning="status_stok == 'restock'">
+                <field name="name"/>
+                <field name="kategori"/>
+                <field name="stok_ton" sum="Total Stok"/>
+                <field name="satuan"/>
+                <field name="harga_satuan"/>
+                <field name="supplier_id"/>
+                <field name="product_id"/>
+                <field name="status_stok" widget="badge" decoration-success="status_stok == 'aman'" decoration-warning="status_stok == 'restock'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_wgu_chemical_form" model="ir.ui.view">
+        <field name="name">wgu.chemical.form</field>
+        <field name="model">wgu.chemical</field>
+        <field name="arch" type="xml">
+            <form string="Bahan Kimia WGU">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Nama Bahan Kimia"/>
+                        <h1><field name="name" placeholder="Contoh: Kaporit Gula / Calcium Hypochlorite"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identitas &amp; Stok">
+                            <field name="kategori"/>
+                            <field name="stok_ton"/>
+                            <field name="stok_minimum"/>
+                            <field name="satuan"/>
+                            <field name="status_stok" readonly="1"/>
+                        </group>
+                        <group string="Pengikat Odoo Resmi">
+                            <field name="harga_satuan"/>
+                            <field name="supplier_id"/>
+                            <field name="product_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wgu_chemical" model="ir.actions.act_window">
+        <field name="name">Inventory Bahan Kimia WGU</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wgu.chemical</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Kelola stok bahan kimia instalasi air (Kaporit, Tawas, Kapasit).</p>
+            <p>Status "Perlu Restock" otomatis saat stok di bawah batas minimum.</p>
+            <p>Produk inventory dikaitkan ke modul resmi Odoo Inventory / Stock.</p>
+        </field>
+    </record>
+
+    <!-- Induk tanpa action (container) supaya sub-menu tetap muncul;
+         halaman inventory dipindah ke anak pertama "Manajemen Inventory". -->
+    <menuitem id="menu_wgu_chemical_sub"
+              name="Chemical Supply"
+              parent="menu_wgu_root"
+              sequence="20"/>
+
+    <menuitem id="menu_wgu_chemical_main"
+              name="Manajemen Inventory"
+              parent="menu_wgu_chemical_sub"
+              action="action_wgu_chemical"
+              sequence="10"/>
+
+    <!-- ============================================================
+         REQUEST PO LAPANGAN (hasil injeksi portal mobile) — submenu
+         di bawah Chemical Supply. Admin menyetujui / menolak
+         pengajuan petugas yang dikirim dari /pdam/meter-reading.
+         ============================================================ -->
+    <record id="view_wgu_po_request_tree" model="ir.ui.view">
+        <field name="name">wgu.po.request.tree</field>
+        <field name="model">wgu.po.request</field>
+        <field name="arch" type="xml">
+            <tree string="Pengajuan Kebutuhan Lapangan">
+                <field name="waktu_pengajuan"/>
+                <field name="petugas_id"/>
+                <field name="item_name"/>
+                <field name="chemical_id"/>
+                <field name="qty"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-warning="state == 'submitted'" decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_wgu_po_request_form" model="ir.ui.view">
+        <field name="name">wgu.po.request.form</field>
+        <field name="model">wgu.po.request</field>
+        <field name="arch" type="xml">
+            <form string="Request PO Lapangan">
+                <header>
+                    <button name="action_setujui" type="object" string="Setujui" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'not in', ('draft', 'submitted'))]}"/>
+                    <button name="action_tolak" type="object" string="Tolak"
+                            attrs="{'invisible': [('state', 'not in', ('draft', 'submitted'))]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,rejected"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Pengajuan">
+                            <field name="item_name"/>
+                            <field name="chemical_id"/>
+                            <field name="qty"/>
+                        </group>
+                        <group string="Petugas &amp; Waktu">
+                            <field name="petugas_id"/>
+                            <field name="waktu_pengajuan"/>
+                        </group>
+                    </group>
+                    <group string="Keterangan (Kebutuhan Lain / Other)">
+                        <field name="catatan_lain" nolabel="1" placeholder="Misalnya: Meteran Water perlu diganti"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wgu_po_request" model="ir.actions.act_window">
+        <field name="name">Request PO Lapangan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wgu.po.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Pengajuan kebutuhan lapangan dari portal HP petugas (/pdam/meter-reading).</p>
+            <p>Admin menyetujui atau menolak; status tercatat permanen di PostgreSQL.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_wgu_po_request"
+              name="Request PO Lapangan"
+              parent="menu_wgu_chemical_sub"
+              action="action_wgu_po_request"
+              sequence="20"/>
+</odoo>

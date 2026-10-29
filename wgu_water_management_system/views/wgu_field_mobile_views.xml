@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================
+         FRONTEND HP PETUGAS LAPANGAN — rute /pdam/meter-reading
+         Halaman standalone full-screen (tanpa chrome backend Odoo)
+         untuk smartphone petugas via IP lokal.
+         Aset CSS/JS didaftarkan lewat bundle resmi web.assets_frontend
+         (field_mobile.css + field_mobile.js terdaftar di __manifest__.py),
+         bukan link/script path manual.
+         ============================================================ -->
+    <template id="field_mobile_app" name="WGU PDAM Field Reader Mobile">
+        <html lang="id">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+                <meta name="theme-color" content="#dff1fc"/>
+                <title>WGU Water — Field Reader</title>
+                <link rel="stylesheet" href="/web/static/src/libs/fontawesome/css/font-awesome.css"/>
+                <t t-call-assets="web.assets_frontend" t-js="false"/>
+            </head>
+            <body class="pdam-stage">
+                <div class="pdam-phone">
+                    <div class="pdam-notch"><span class="pdam-notch-cam"/></div>
+                    <div class="pdam-statusbar">
+                        <span id="m-clock">--:--</span>
+                        <span class="pdam-status-right">
+                            <span id="m-queue-badge" class="pdam-queue-badge" style="display:none;">0</span>
+                            <i id="m-signal-icon" class="fa fa-wifi"/>
+                            <span id="m-signal-text">ONLINE</span>
+                        </span>
+                    </div>
+
+                    <div class="pdam-body">
+                        <!-- ========== LOGIN (petugas resmi akun Odoo + kata sandi) ========== -->
+                        <div id="m-login" class="m-screen-login">
+                            <div class="water-ripple-aura"><i class="fa fa-tint"/></div>
+                            <div class="login-title"><span class="app-name">WGU Water Management</span></div>
+                            <div class="login-subtitle">Field Reader Application v1.3 — Odoo Mobile API</div>
+                            <div class="login-card">
+                                <div class="login-field">
+                                    <label>ID Akses Petugas (Odoo User)</label>
+                                    <select class="login-inp" id="login-user">
+                                        <option value="">— Pilih Petugas (Odoo User) —</option>
+                                    </select>
+                                </div>
+                                <div class="login-field">
+                                    <label>Kata Sandi</label>
+                                    <input class="login-inp" type="password" id="login-pass"
+                                           placeholder="Kata sandi akun Odoo Anda"
+                                           autocomplete="current-password"/>
+                                </div>
+                                <button class="btn-login-go" type="button" onclick="prosesLogin()">MASUK LOG SECARA AMAN</button>
+                                <div id="login-error" class="pdam-error" style="display:none;"/>
+                            </div>
+                        </div>
+
+                        <!-- ========== APP SHELL ========== -->
+                        <div id="m-app-shell" class="m-app-shell">
+                            <div class="m-navbar">
+                                <button class="m-burger" id="m-burger-btn" onclick="toggleDrawer()"><i class="fa fa-bars"/></button>
+                                <span class="m-navbar-title">Field Reader</span>
+                                <span id="m-net-badge" class="m-net-badge online">ONLINE</span>
+                            </div>
+                            <div id="m-drawer" class="m-drawer">
+                                <div class="m-drawer-item" onclick="gotoScreen('m-screen-dashboard');closeDrawer();"><i class="fa fa-home"/> Beranda Tugas</div>
+                                <div class="m-drawer-item" onclick="gotoScreen('m-screen-scanner');closeDrawer();"><i class="fa fa-qrcode"/> Scan QR Meter</div>
+                                <div class="m-drawer-item" onclick="gotoScreen('m-screen-po');closeDrawer();"><i class="fa fa-file-text-o"/> Request PO</div>
+                                <div class="m-drawer-item" onclick="prosesLogout();closeDrawer();"><i class="fa fa-sign-out"/> Keluar Aplikasi</div>
+                            </div>
+
+                            <!-- Screen: Dashboard tugas -->
+                            <div id="m-screen-dashboard" class="m-screen active">
+                                <div class="m-content">
+                                    <div class="m-hello">Selamat bertugas, <b id="m-petugas-nama">Petugas</b></div>
+                                    <div class="m-stats-row">
+                                        <div class="m-stat neo-card"><span class="m-stat-num" id="m-stat-total">0</span><span class="m-stat-lbl">Total</span></div>
+                                        <div class="m-stat neo-card"><span class="m-stat-num ok" id="m-stat-done">0</span><span class="m-stat-lbl">Selesai</span></div>
+                                        <div class="m-stat neo-card"><span class="m-stat-num warn" id="m-stat-pending">0</span><span class="m-stat-lbl">Pending</span></div>
+                                    </div>
+                                    <div class="m-sec-title"><i class="fa fa-tasks"/> Antrean Baca Meter Hari Ini</div>
+                                    <div id="m-kanban-container" class="m-kanban-container"/>
+                                    <button class="btn-scan-big" type="button" onclick="gotoScreen('m-screen-scanner')"><i class="fa fa-qrcode"/> SCAN QR PELANGGAN</button>
+                                </div>
+                            </div>
+
+                            <!-- Screen: Scanner QR nyata via kamera -->
+                            <div id="m-screen-scanner" class="m-screen">
+                                <div class="m-content">
+                                    <div class="m-sec-title"><i class="fa fa-qrcode"/> Langkah 1 — Validasi QR</div>
+                                    <div class="m-form-card">
+                                        <div id="m-camera-box" class="m-camera-box">
+                                            <video id="m-camera-video" playsinline="playsinline" style="display:none;"/>
+                                            <div id="m-camera-hint" class="m-camera-hint"><i class="fa fa-camera"/> Arahkan kamera ke QR Code di depan rumah</div>
+                                        </div>
+                                        <div class="m-inp">
+                                            <label>Atau ketik ID Kontrak manual</label>
+                                            <div class="m-manual-row">
+                                                <input type="text" id="m-manual-qr" class="m-input" placeholder="MTR-2025-01001"/>
+                                                <button class="btn-mini" type="button" onclick="validasiQrManual()">Validasi</button>
+                                            </div>
+                                        </div>
+                                        <div id="m-scan-result" style="display:none;"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screen: Form foto + OCR + GPS -->
+                            <div id="m-screen-form" class="m-screen">
+                                <div class="m-content">
+                                    <div class="m-sec-title"><i class="fa fa-user"/> Data Pelanggan (dari Odoo)</div>
+                                    <div class="m-form-card">
+                                        <div class="m-inp"><label>Nama</label><input type="text" id="m-form-nama" class="m-input" readonly="readonly"/></div>
+                                        <div class="m-inp"><label>Alamat</label><input type="text" id="m-form-alamat" class="m-input" readonly="readonly"/></div>
+                                        <div class="m-inp"><label>No. Seri Meter</label><input type="text" id="m-form-noseri" class="m-input" readonly="readonly"/></div>
+                                        <div class="m-inp"><label>Sektor</label><input type="text" id="m-form-sektor" class="m-input" readonly="readonly"/></div>
+                                        <div class="m-inp"><label>Meter Lalu (m³)</label><input type="text" id="m-form-meter-lalu" class="m-input" readonly="readonly"/></div>
+                                    </div>
+
+                                    <div class="m-sec-title"><i class="fa fa-camera"/> Langkah 2 — Foto &amp; OCR Engine</div>
+                                    <div class="m-form-card">
+                                        <canvas id="m-foto-canvas" class="m-foto-canvas" style="display:none;"/>
+                                        <div id="m-foto-placeholder" class="m-camera-hint"><i class="fa fa-picture-o"/> Belum ada foto meteran</div>
+                                        <div class="m-btn-row">
+                                            <button class="btn-mini" type="button" onclick="ambilFotoMeter()"><i class="fa fa-camera"/> Ambil Foto &amp; OCR</button>
+                                            <input type="file" id="m-foto-file" accept="image/*" capture="capture" style="display:none;" onchange="fotoDipilih(this)"/>
+                                        </div>
+                                        <div id="m-ocr-status" class="m-ocr-status" style="display:none;"/>
+                                        <div class="m-inp">
+                                            <label>Angka Meter Baru (m³) — Auto-fill via OCR</label>
+                                            <input type="text" id="m-form-meter-baru" class="m-input" placeholder="01250"/>
+                                        </div>
+                                        <div id="m-anomaly-box" style="display:none;">
+                                        <div class="m-inp">
+                                            <label>Kendala Lapangan</label>
+                                            <div class="m-anomali-btns">
+                                                <button type="button" class="btn-anomali" data-kode="terkunci" onclick="pilihAnomaliLapangan(this)"><i class="fa fa-lock"/> Pagar Terkunci</button>
+                                                <button type="button" class="btn-anomali" data-kode="rusak" onclick="pilihAnomaliLapangan(this)"><i class="fa fa-wrench"/> Meter Rusak</button>
+                                                <button type="button" class="btn-anomali" data-kode="cuaca" onclick="pilihAnomaliLapangan(this)"><i class="fa fa-cloud"/> Cuaca Hujan Ekstrem</button>
+                                            </div>
+                                            <input type="hidden" id="m-form-kendala" value="normal"/>
+                                        </div>
+                                        <div class="m-inp">
+                                            <label>Catatan / Memo Lapangan</label>
+                                            <textarea id="m-form-catatan" class="m-input" rows="2" placeholder="Memo tersimpan ke database pusat"></textarea>
+                                        </div>
+                                    </div>
+                                        <div id="m-gps-info" class="m-gps-info"><i class="fa fa-crosshairs"/> GPS: mengunci koordinat…</div>
+                                    </div>
+
+                                    <div class="m-sim-row" id="m-sim-row">
+                                        <button type="button" id="m-btn-sinyal" class="btn-sinyal-off" onclick="toggleSinyalLapangan()"><i class="fa fa-power-off"/> MATIKAN SINYAL</button>
+                                    </div>
+                                    <div class="m-btn-row">
+                                        <button class="btn-kirim btn-disabled" type="button" id="m-btn-kirim" disabled="disabled" onclick="simpanDataLapangan()"><i class="fa fa-paper-plane"/> Kirim ke Kantor</button>
+                                        <button class="btn-batal" type="button" onclick="gotoScreen('m-screen-dashboard')">Batal</button>
+                                    </div>
+                                    <div id="m-form-msg" class="pdam-msg" style="display:none;"/>
+                                </div>
+                            </div>
+
+                            <!-- Screen: Request PO — Pengajuan Kebutuhan Lapangan -->
+                            <div id="m-screen-po" class="m-screen">
+                                <div class="m-content">
+                                    <div class="m-sec-title"><i class="fa fa-file-text-o"/> Pengajuan Kebutuhan Lapangan</div>
+                                    <div class="m-form-card">
+                                        <div class="m-inp">
+                                            <label>Form 1 — Barang yang Dibutuhkan (Inventory Odoo)</label>
+                                            <select id="m-po-item" class="m-input" onchange="poItemBerubah()">
+                                                <option value="">— Pilih Barang Inventory —</option>
+                                            </select>
+                                        </div>
+                                        <div id="m-po-other-wrap" class="m-inp" style="display:none;">
+                                            <label>Nama Kebutuhan Lainnya (Other)</label>
+                                            <input type="text" id="m-po-other" class="m-input" placeholder="Contoh: Meteran Water perlu diganti"/>
+                                        </div>
+                                        <div class="m-inp">
+                                            <label>Form 2 — Jumlah Diminta</label>
+                                            <input type="number" id="m-po-qty" class="m-input" min="0.5" step="0.5" placeholder="Contoh: 2"/>
+                                        </div>
+                                        <button class="btn-ajukan-po" type="button" id="btn-ajukan-po" onclick="ajukanPo()"><i class="fa fa-paper-plane"/> + Ajukan ke Admin</button>
+                                        <div class="m-btn-row" style="margin-top:8px;">
+                                            <button class="btn-batal" type="button" onclick="gotoScreen('m-screen-dashboard')">Batal</button>
+                                        </div>
+                                        <div id="m-po-msg" class="pdam-msg" style="display:none;"/>
+                                    </div>
+                                    <div class="m-gps-info"><i class="fa fa-info-circle"/> Opsi "Lainnya / Other" menampilkan kolom isian manual sesuai kebutuhan petugas.</div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom nav -->
+                            <div class="m-bottom-nav">
+                                <div class="m-nav-item active" id="nav-tugas" onclick="gotoScreen('m-screen-dashboard');setNavActive('nav-tugas');"><i class="fa fa-tasks"/><span>Tugas</span></div>
+                                <div class="m-nav-item" id="nav-scan" onclick="gotoScreen('m-screen-scanner');setNavActive('nav-scan');"><i class="fa fa-qrcode"/><span>Scan</span></div>
+                                <div class="m-nav-item" id="nav-po" onclick="gotoScreen('m-screen-po');setNavActive('nav-po');"><i class="fa fa-file-text-o"/><span>PO</span></div>
+                                <div class="m-nav-item" id="nav-sync" onclick="muatDashboard();setNavActive('nav-tugas');"><i class="fa fa-refresh"/><span>Sync</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer="defer"/>
+                <t t-call-assets="web.assets_frontend" t-css="false" defer_load="true"/>
+            </body>
+        </html>
+    </template>
+</odoo>

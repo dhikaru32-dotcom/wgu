@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tampilan Tabel / List View Data Master -->
+    <record id="view_wgu_pelanggan_tree" model="ir.ui.view">
+        <field name="name">wgu.pelanggan.tree</field>
+        <field name="model">wgu.pelanggan</field>
+        <field name="arch" type="xml">
+            <tree string="Odoo Data Master Pelanggan">
+                <field name="id_kontrak"/>
+                <field name="customer_code"/>
+                <field name="nama" class="fw-bold text-primary"/>
+                <field name="alamat"/>
+                <field name="cluster" optional="show"/>
+                <field name="blok" optional="show"/>
+                <field name="kota" optional="show"/>
+                <field name="no_seri"/>
+                <field name="sektor"/>
+                <field name="golongan"/>
+                <field name="meter_terakhir"/>
+                <field name="status_verifikasi" optional="show"/>
+                <field name="partner_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Tampilan Formulir / Form View Sambungan Baru -->
+    <record id="view_wgu_pelanggan_form" model="ir.ui.view">
+        <field name="name">wgu.pelanggan.form</field>
+        <field name="model">wgu.pelanggan</field>
+        <field name="arch" type="xml">
+            <form string="Sambungan Baru">
+                <header>
+                    <button name="%(action_report_wgu_qr)d" type="action" string="🖨️ Print QR Code" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="id_kontrak" string="Nomor Kontrak Pelanggan"/>
+                        <h1><field name="id_kontrak" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Informasi Utama">
+                            <field name="customer_code" placeholder="Contoh: C0002 (dari Excel resmi)"/>
+                            <field name="nama" placeholder="Nama Lengkap Sesuai KTP..."/>
+                            <field name="tipe_pelanggan"/>
+                            <field name="partner_id" placeholder="Kontak res.partner terkait (opsional)"/>
+                        </group>
+                        <group string="Identitas &amp; Kontak">
+                            <field name="identity_type"/>
+                            <field name="no_ktp" placeholder="16 digit NIK / nomor NIB"/>
+                            <field name="no_hp" placeholder="Contoh: 081234567890"/>
+                            <field name="email" widget="email" placeholder="opsional"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Alamat Sesuai KTP">
+                            <field name="ktp_alamat" placeholder="Alamat persis seperti tertera pada KTP..."/>
+                            <field name="ktp_rt_rw" placeholder="RT/RW"/>
+                            <field name="ktp_kelurahan" placeholder="Kelurahan/Desa"/>
+                            <field name="ktp_kecamatan" placeholder="Kecamatan"/>
+                            <field name="ktp_propinsi" placeholder="Propinsi"/>
+                        </group>
+                        <group string="Alamat Unit di Perumahan">
+                            <field name="alamat" placeholder="Alamat lengkap rumah / unit..."/>
+                            <field name="cluster"/>
+                            <field name="blok"/>
+                            <field name="nomor_unit"/>
+                            <field name="kota"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Teknis Meteran">
+                            <field name="no_seri" placeholder="Contoh: MTR-2025-01001"/>
+                            <field name="sektor" placeholder="Contoh: Sidoarjo Kota"/>
+                            <field name="golongan"/>
+                            <field name="meter_terakhir" placeholder="01000"/>
+                        </group>
+                        <group string="Admin CS">
+                            <field name="status_verifikasi"/>
+                            <field name="sumber_data"/>
+                            <field name="tanggal_daftar"/>
+                            <field name="catatan_cs" placeholder="Catatan tambahan petugas CS..."/>
+                        </group>
+                    </group>
+                    <group string="Preview Gambar QR Code">
+                        <field name="qr_code_image" widget="image" readonly="1" nolabel="1" class="d-block mx-auto"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Pencarian: tiga kunci beda-pelanggan (nama, cluster/blok/unit, code/kontrak) -->
+    <record id="view_wgu_pelanggan_search" model="ir.ui.view">
+        <field name="name">wgu.pelanggan.search</field>
+        <field name="model">wgu.pelanggan</field>
+        <field name="arch" type="xml">
+            <search string="Cari Pelanggan">
+                <field name="nama"/>
+                <field name="customer_code"/>
+                <field name="id_kontrak"/>
+                <field name="no_ktp"/>
+                <field name="cluster"/>
+                <field name="blok"/>
+                <field name="nomor_unit"/>
+                <field name="kota"/>
+                <filter name="filter_belum_verifikasi" string="Belum Diverifikasi" domain="[('status_verifikasi','=','belum')]"/>
+                <filter name="filter_aktif" string="Aktif" domain="[('status_verifikasi','=','aktif')]"/>
+                <group expand="0" string="Kelompokkan">
+                    <filter name="grp_sektor" string="Sektor" context="{'group_by':'sektor'}"/>
+                    <filter name="grp_cluster" string="Cluster" context="{'group_by':'cluster'}"/>
+                    <filter name="grp_status" string="Status Verifikasi" context="{'group_by':'status_verifikasi'}"/>
+                    <filter name="grp_tipe" string="Tipe Pelanggan" context="{'group_by':'tipe_pelanggan'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tindakan Aksi Menu Window -->
+    <record id="action_wgu_pelanggan" model="ir.actions.act_window">
+        <field name="name">Data Master Pelanggan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wgu.pelanggan</field>
+        <field name="view_mode">tree,form,search</field>
+    </record>
+
+    <!-- Susunan Struktur Menu Utama Bar Atas Odoo.
+         Sequence 1 = terendah di antara root menu (Discuss=5, Contacts=20)
+         sehingga WGU Water Management menjadi homepage setelah login.
+         web_icon tetes air = identitas WGU (navbar & app drawer Odoo). -->
+    <menuitem id="menu_wgu_root" name="WGU Water Management"
+              sequence="1"
+              web_icon="wgu_water_management_system,static/description/icon.png"/>
+    <!-- MANDAT 2026-10-16: klik "Data Master" langsung membuka halaman
+         Kontak Pelanggan — tanpa drop sub-menu. -->
+    <menuitem id="menu_wgu_pelanggan_sub" name="Data Master" parent="menu_wgu_root" action="action_wgu_pelanggan" sequence="10"/>
+</odoo>

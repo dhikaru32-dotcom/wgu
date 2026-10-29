@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================
+         TEMPLATE QWEB BACKEND PC ADMIN — MONITOR ONLY
+         Simulator HP Petugas Lapangan telah DIPINDAH ke frontend
+         website controller /pdam/meter-reading (lihat controllers/main.py
+         dan views/wgu_field_mobile_views.xml). Tampilan PC kini bersih:
+         hanya dashboard monitor data kantor pusat yang terhubung ke
+         PostgreSQL lokal (port 5432).
+         ============================================================ -->
+    <record id="wgu_neomorphism_dashboard_template" model="ir.ui.view">
+        <field name="name">WGU Neomorphism Dashboard Template</field>
+        <field name="type">qweb</field>
+        <field name="arch" type="xml">
+            <div class="wgu_neom_container">
+                <!-- SISI KIRI: ODOO ACTION MANAGER — HQ MONITOR DATA (PC ADMIN) -->
+                <div class="o_presentation_root">
+                    <div class="o_action_manager">
+                        <div class="o_control_panel">
+                            <div class="o_cp_top">
+                                <div class="o_breadcrumb" id="o-breadcrumb">
+                                    <span>Monitoring Lapangan — Kantor Pusat</span>
+                                </div>
+                                <div class="o_view_switcher">
+                                    <button class="o_view_btn active" title="List View"><i class="fa-solid fa-list"/></button>
+                                    <button class="o_view_btn" title="Kanban View"><i class="fa-solid fa-table-cells-large"/></button>
+                                    <button class="o_view_btn" title="Graph View"><i class="fa-solid fa-chart-bar"/></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bento Grid KPI Monitoring (data real-time via client action) -->
+                        <div class="o_view_panel active">
+                            <div class="o_button_box neo-card">
+                                <button class="o_stat_button" title="Selesai Dibaca">
+                                    <i class="fa-solid fa-circle-check"/>
+                                    <span class="o_stat_value" id="stat-selesai">0</span>
+                                    <span class="o_stat_label">Selesai Dibaca</span>
+                                </button>
+                                <button class="o_stat_button" title="Pending Sync">
+                                    <i class="fa-solid fa-clock"/>
+                                    <span class="o_stat_value" id="stat-pending">0</span>
+                                    <span class="o_stat_label">Pending Sync</span>
+                                </button>
+                                <button class="o_stat_button" title="Anomali">
+                                    <i class="fa-solid fa-triangle-exclamation"/>
+                                    <span class="o_stat_value" id="stat-anomali">0</span>
+                                    <span class="o_stat_label">Anomali</span>
+                                </button>
+                                <button class="o_stat_button" title="Total Pelanggan">
+                                    <i class="fa-solid fa-users"/>
+                                    <span class="o_stat_value" id="stat-total">0</span>
+                                    <span class="o_stat_label">Total Pelanggan</span>
+                                </button>
+                            </div>
+
+                            <!-- Area Tabel Monitoring: dirender penuh oleh client action
+                                 OWL "wgu_water_management.dashboard" (neomorphism_logic.js)
+                                 yang membaca data master pelanggan & bacaan meter. -->
+                            <div class="o_view_content" id="wgu-monitor-content">
+                                <div class="o_list_view_placeholder">
+                                    <p>Dashboard monitor data pelanggan &amp; bacaan meter dimuat melalui
+                                       Client Action Neomorphism (ir.actions.client).</p>
+                                    <p>Simulator HP Petugas Lapangan kini berada di
+                                       <strong>/pdam/meter-reading</strong> — akses terpisah khusus smartphone.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <!-- Client Action Window untuk Membuka Dashboard Terintegrasi -->
+    <record id="action_wgu_neomorphism_dashboard" model="ir.actions.client">
+        <field name="name">WGU Neomorphism Control Center</field>
+        <field name="tag">wgu_water_management.dashboard</field>
+    </record>
+
+    <!-- Menuitem Terintegrasi di Bar Atas Odoo -->
+    <menuitem id="menu_wgu_dashboard_root"
+              name="Neomorphism Monitor"
+              parent="menu_wgu_root"
+              action="action_wgu_neomorphism_dashboard"
+              sequence="1"/>
+</odoo>

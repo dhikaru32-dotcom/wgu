@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Laporan PDF QR Code pelanggan (tombol "Print QR Code" di form) -->
+        <record id="action_report_wgu_qr" model="ir.actions.report">
+            <field name="name">WGU QR Code Pelanggan</field>
+            <field name="model">wgu.pelanggan</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">wgu_water_management_system.report_wgu_qr</field>
+            <field name="print_report_name">'QR-%s' % (object.id_kontrak or '')</field>
+        </record>
+
+        <template id="report_wgu_qr">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div style="text-align:center; font-family:Arial; page-break-after:always;">
+                        <img t-att-src="'data:image/png;base64,%s' % (doc.qr_code_image or '')"
+                             style="width:110mm;height:110mm;"/>
+                        <h4 t-field="doc.nama"/>
+                        <p>ID Kontrak: <span t-field="doc.id_kontrak"/></p>
+                        <p>No. Seri: <span t-field="doc.no_seri"/></p>
+                        <p>Sektor: <span t-field="doc.sektor"/></p>
+                        <p>Meter Terakhir: <span t-field="doc.meter_terakhir"/></p>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

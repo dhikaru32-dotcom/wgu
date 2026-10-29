@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wgu_pelanggan,wgu.pelanggan,model_wgu_pelanggan,base.group_user,1,1,1,1
+access_wgu_bacaan,wgu.bacaan,model_wgu_bacaan,base.group_user,1,1,1,1
+access_wgu_chemical,wgu.chemical,model_wgu_chemical,base.group_user,1,1,1,1
+access_wgu_po_request,wgu.po.request,model_wgu_po_request,base.group_user,1,1,1,1
+access_wgu_tugas_user,access.wgu.tugas.user,model_wgu_tugas,base.group_user,1,1,1,1
+access_wgu_buat_tugas_wizard_user,access.wgu.buat.tugas.wizard.user,model_wgu_buat_tugas_wizard,base.group_user,1,1,1,1
+access_wgu_pesan_user,access.wgu.pesan.user,model_wgu_pesan,base.group_user,1,1,1,1

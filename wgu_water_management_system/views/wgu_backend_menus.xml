@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================
+         HALAMAN BACKEND NYATA #3: ACCOUNTING (sequence 30)
+         Tagihan air WGU diterbitkan lewat ORM resmi ke model
+         account.move (draf invoice) dengan ref prefix "WGU/".
+         ============================================================ -->
+    <record id="action_wgu_accounting" model="ir.actions.act_window">
+        <field name="name">Faktur Air WGU (Draft Invoice)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('move_type', '=', 'out_invoice'), ('ref', 'like', 'WGU/')]</field>
+        <field name="context">{'default_move_type': 'out_invoice'}</field>
+        <field name="help" type="html">
+            <p>Draf faktur tagihan air yang diterbitkan modul WGU dari data baca meter.</p>
+            <p>Perhitungan ORM: (pemakaian m3 x tarif golongan) + biaya admin Rp 52.500.</p>
+            <p>Model resmi Odoo: account.move (modul Accounting).</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_wgu_accounting"
+              name="Accounting"
+              parent="menu_wgu_root"
+              action="action_wgu_accounting"
+              sequence="30"/>
+
+    <!-- ============================================================
+         HALAMAN BACKEND NYATA #4: DATA PETUGAS (sequence 40)
+         Terikat ekosistem resmi: hr.employee (Karyawan) yang
+         disambungkan ke akun login res.users via user_id.
+         ============================================================ -->
+    <record id="action_wgu_petugas" model="ir.actions.act_window">
+        <field name="name">Data Petugas (Karyawan Odoo)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('active', '=', True)]</field>
+        <field name="help" type="html">
+            <p>Manajemen petugas lapangan sebagai karyawan resmi Odoo (modul Employees/HR).</p>
+            <p>Field "User" pada karyawan adalah pengikat ke akun login res.users</p>
+            <p>yang dipakai pada dropdown "ID Akses Petugas" portal mobile.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_wgu_petugas"
+              name="Data Petugas"
+              parent="menu_wgu_root"
+              action="action_wgu_petugas"
+              sequence="40"/>
+
+    <!-- ============================================================
+         MANDAT 2026-10-16: submenu "Karyawan/Petugas" urutan PERTAMA
+         di bawah menu Data Petugas (sebelum Departemen). Membuka
+         halaman kustom WGU: tabel nama petugas riil (Odoo Users/hr)
+         + tabel tracking status Petugas Lapangan Aktif dengan badge
+         dinamis Online/Offline, dirender client action WGU dengan
+         params section=petugas.
+         ============================================================ -->
+    <record id="action_wgu_petugas_karyawan" model="ir.actions.client">
+        <field name="name">Karyawan/Petugas</field>
+        <field name="tag">wgu_water_management.dashboard</field>
+        <field name="params" eval="{'section': 'petugas'}"/>
+    </record>
+
+    <menuitem id="menu_wgu_petugas_karyawan"
+              name="Karyawan/Petugas"
+              parent="menu_wgu_petugas"
+              action="action_wgu_petugas_karyawan"
+              sequence="10"/>
+
+    <!-- Departemen WGU (terikat hr.department resmi) -->
+    <record id="action_wgu_departemen" model="ir.actions.act_window">
+        <field name="name">Departemen WGU</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.department</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Departemen resmi Odoo (modul Employees) untuk mengelompokkan petugas WGU.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_wgu_departemen"
+              name="Departemen"
+              parent="menu_wgu_petugas"
+              action="action_wgu_departemen"
+              sequence="20"/>
+</odoo>

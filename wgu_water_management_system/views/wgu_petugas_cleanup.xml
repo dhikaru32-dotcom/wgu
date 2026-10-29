@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================
+         MANDAT 2026-10-15 — PEMBERSIHAN MENU DATA PETUGAS:
+         1) Data departemen bawaan template Odoo (Administration, Sales,
+            dst.) dihapus lewat ORM resmi & idempoten tiap upgrade.
+         2) Daftar nama karyawan yang tidak terikat modul WGU Water
+            (bukan petugas lapangan / bukan departemen WGU) diarsipkan.
+         3) App bawaan "Employees" disembunyikan; manajemen petugas
+            memakai menu resmi WGU "Data Petugas" (hr.employee).
+         ============================================================ -->
+    <function model="hr.employee" name="wgu_bersihkan_petugas_non_wgu"/>
+
+    <record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

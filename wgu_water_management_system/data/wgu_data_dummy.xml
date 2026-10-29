@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================
+         DATA DEMO WGU WATER — basis mutlak: mockup blueprint dashboard WGU
+         CATATAN: file tanpa noupdate sehingga setiap upgrade menulis
+         ulang record demo (termasuk reset password demo -> "wgu123").
+         ============================================================ -->
+
+    <!-- ===== 1. KATEGORI & PRODUK INVENTORY (ikatan modul Stock) ===== -->
+    <record id="kat_chemical_desinfektan" model="product.category">
+        <field name="name">Chemical - Desinfektan</field>
+    </record>
+    <record id="kat_chemical_koagulan" model="product.category">
+        <field name="name">Chemical - Koagulan</field>
+    </record>
+    <record id="kat_chemical_filter" model="product.category">
+        <field name="name">Chemical - Filter Media</field>
+    </record>
+
+    <record id="product_kaporit" model="product.template">
+        <field name="name">Kaporit Gula / Calcium Hypochlorite</field>
+        <field name="categ_id" ref="kat_chemical_desinfektan"/>
+        <field name="type">product</field>
+        <field name="list_price">15000</field>
+    </record>
+    <record id="product_tawas" model="product.template">
+        <field name="name">Tawas / Aluminium Sulfate</field>
+        <field name="categ_id" ref="kat_chemical_koagulan"/>
+        <field name="type">product</field>
+        <field name="list_price">12500</field>
+    </record>
+    <record id="product_kapasit" model="product.template">
+        <field name="name">Kapasit Aktivasi / Activated Carbon</field>
+        <field name="categ_id" ref="kat_chemical_filter"/>
+        <field name="type">product</field>
+        <field name="list_price">45000</field>
+    </record>
+
+    <!-- ===== 2. SUPPLIER RESMI (res.partner dengan supplier_rank) ===== -->
+    <record id="partner_supplier_kimia_jaya" model="res.partner">
+        <field name="name">PT Kimia Jaya Distribusi</field>
+        <field name="supplier_rank">1</field>
+        <field name="street">Jl. Raya Sidoarjo No. 88</field>
+        <field name="phone">(031) 8881-1001</field>
+    </record>
+    <record id="partner_supplier_bahan_kimia" model="res.partner">
+        <field name="name">CV Bahan Kimia Sidoarjo</field>
+        <field name="supplier_rank">1</field>
+        <field name="street">Jl. Gubeng Industri Blok B-12, Surabaya</field>
+        <field name="phone">(031) 8881-1002</field>
+    </record>
+    <record id="partner_supplier_filter_maju" model="res.partner">
+        <field name="name">PT Filter Maju</field>
+        <field name="supplier_rank">1</field>
+        <field name="street">Jl. Industri Rungkut Mapan Timur IV/R-7, Surabaya</field>
+        <field name="phone">(031) 8881-1003</field>
+    </record>
+
+    <!-- ===== 3. KONTAK PELANGGAN RESMI (res.partner - Data Master) ===== -->
+    <record id="partner_siti_aminah" model="res.partner">
+        <field name="name">Siti Aminah</field>
+        <field name="street">Jl. Melati No. 12, Sidokumpul</field>
+        <field name="phone">0812-3400-1001</field>
+    </record>
+    <record id="partner_budi_santoso" model="res.partner">
+        <field name="name">Budi Santoso</field>
+        <field name="street">Jl. Mawar No. 5, Tropodo</field>
+        <field name="phone">0812-3400-1002</field>
+    </record>
+    <record id="partner_masjid_agung" model="res.partner">
+        <field name="name">Masjid Agung Sidoarjo</field>
+        <field name="street">Jl. Alun-Alun Utara No. 1</field>
+        <field name="phone">0812-3400-1003</field>
+    </record>
+    <record id="partner_yayasan_yatim" model="res.partner">
+        <field name="name">Yayasan Yatim Piatu</field>
+        <field name="street">Jl. Pahlawan No. 88, Buduran</field>
+        <field name="phone">0812-3400-1004</field>
+    </record>
+    <record id="partner_ruko_makmur" model="res.partner">
+        <field name="name">Ruko Makmur Sejahtera</field>
+        <field name="street">Jl. Raya Ahmad Yani Blok C5</field>
+        <field name="phone">0812-3400-1005</field>
+    </record>
+
+    <!-- ===== 4. DATA MASTER PELANGGAN (terikat res.partner) ===== -->
+    <record id="wgu_dummy_1" model="wgu.pelanggan">
+        <field name="id_kontrak">MTR-2025-01001</field>
+        <field name="nama">Siti Aminah</field>
+        <field name="alamat">Jl. Melati No. 12, Sidokumpul</field>
+        <field name="no_seri">MTR-2025-01001</field>
+        <field name="sektor">Sidoarjo Kota</field>
+        <field name="golongan">rumah</field>
+        <field name="meter_terakhir">01000</field>
+        <field name="customer_code">C0001</field>
+        <field name="no_ktp">3515011203800001</field>
+        <field name="no_hp">081234567001</field>
+        <field name="kota">KAB SIDOARJO</field>
+        <field name="cluster">Melati</field>
+        <field name="blok">C</field>
+        <field name="nomor_unit">12</field>
+        <field name="status_verifikasi">aktif</field>
+        <field name="partner_id" ref="partner_siti_aminah"/>
+    </record>
+    <record id="wgu_dummy_2" model="wgu.pelanggan">
+        <field name="id_kontrak">MTR-2025-01002</field>
+        <field name="nama">Budi Santoso</field>
+        <field name="alamat">Jl. Mawar No. 5, Tropodo</field>
+        <field name="no_seri">MTR-2025-01002</field>
+        <field name="sektor">Waru</field>
+        <field name="golongan">rumah</field>
+        <field name="meter_terakhir">01240</field>
+        <field name="customer_code">C0002</field>
+        <field name="no_ktp">3515021107850002</field>
+        <field name="no_hp">081234567002</field>
+        <field name="kota">KAB SIDOARJO</field>
+        <field name="cluster">Waru Timur</field>
+        <field name="nomor_unit">B-5</field>
+        <field name="status_verifikasi">aktif</field>
+        <field name="partner_id" ref="partner_budi_santoso"/>
+    </record>
+    <record id="wgu_dummy_3" model="wgu.pelanggan">
+        <field name="id_kontrak">MTR-2025-01003</field>
+        <field name="nama">Masjid Agung Sidoarjo</field>
+        <field name="alamat">Jl. Alun-Alun Utara No. 1</field>
+        <field name="no_seri">MTR-2025-01003</field>
+        <field name="sektor">Sidoarjo Kota</field>
+        <field name="golongan">sosial</field>
+        <field name="meter_terakhir">04500</field>
+        <field name="customer_code">C0003</field>
+        <field name="kota">KAB SIDOARJO</field>
+        <field name="cluster">Alun-Alun</field>
+        <field name="nomor_unit">1</field>
+        <field name="status_verifikasi">aktif</field>
+        <field name="partner_id" ref="partner_masjid_agung"/>
+    </record>
+    <record id="wgu_dummy_4" model="wgu.pelanggan">
+        <field name="id_kontrak">MTR-2025-01004</field>
+        <field name="nama">Yayasan Yatim Piatu</field>
+        <field name="alamat">Jl. Pahlawan No. 88, Buduran</field>
+        <field name="no_seri">MTR-2025-01004</field>
+        <field name="sektor">Buduran</field>
+        <field name="golongan">sosial</field>
+        <field name="meter_terakhir">04600</field>
+        <field name="customer_code">C0004</field>
+        <field name="kota">KAB SIDOARJO</field>
+        <field name="cluster">Pahlawan</field>
+        <field name="nomor_unit">88</field>
+        <field name="status_verifikasi">aktif</field>
+        <field name="partner_id" ref="partner_yayasan_yatim"/>
+    </record>
+    <record id="wgu_dummy_5" model="wgu.pelanggan">
+        <field name="id_kontrak">MTR-2025-01005</field>
+        <field name="nama">Ruko Makmur Sejahtera</field>
+        <field name="alamat">Jl. Raya Ahmad Yani Blok C5</field>
+        <field name="no_seri">MTR-2025-01005</field>
+        <field name="sektor">Waru</field>
+        <field name="golongan">komersial</field>
+        <field name="meter_terakhir">00700</field>
+        <field name="customer_code">C0005</field>
+        <field name="tipe_pelanggan">corporate</field>
+        <field name="identity_type">nib</field>
+        <field name="no_ktp">9022000123456</field>
+        <field name="no_hp">081234567005</field>
+        <field name="email">makmur@example.com</field>
+        <field name="kota">KAB SIDOARJO</field>
+        <field name="cluster">Ahmad Yani</field>
+        <field name="blok">C5</field>
+        <field name="status_verifikasi">aktif</field>
+        <field name="partner_id" ref="partner_ruko_makmur"/>
+    </record>
+
+    <!-- ===== 5. STOK BAHAN KIMIA (ikatan supplier + product) ===== -->
+    <record id="chemical_kaporit" model="wgu.chemical">
+        <field name="name">Kaporit Gula / Calcium Hypochlorite</field>
+        <field name="kategori">desinfektan</field>
+        <field name="stok_ton">5.2</field>
+        <field name="stok_minimum">3.0</field>
+        <field name="satuan">kg</field>
+        <field name="harga_satuan">15000</field>
+        <field name="supplier_id" ref="partner_supplier_kimia_jaya"/>
+        <field name="product_id" ref="product_kaporit"/>
+    </record>
+    <record id="chemical_tawas" model="wgu.chemical">
+        <field name="name">Tawas / Aluminium Sulfate</field>
+        <field name="kategori">koagulan</field>
+        <field name="stok_ton">4.8</field>
+        <field name="stok_minimum">5.0</field>
+        <field name="satuan">kg</field>
+        <field name="harga_satuan">12500</field>
+        <field name="supplier_id" ref="partner_supplier_bahan_kimia"/>
+        <field name="product_id" ref="product_tawas"/>
+    </record>
+    <record id="chemical_kapasit" model="wgu.chemical">
+        <field name="name">Kapasit Aktivasi / Activated Carbon</field>
+        <field name="kategori">filter</field>
+        <field name="stok_ton">2.5</field>
+        <field name="stok_minimum">3.0</field>
+        <field name="satuan">kg</field>
+        <field name="harga_satuan">45000</field>
+        <field name="supplier_id" ref="partner_supplier_filter_maju"/>
+        <field name="product_id" ref="product_kapasit"/>
+    </record>
+
+    <!-- ===== 6. AKUN USER (roster mockup; teknisi dapat group petugas) ===== -->
+    <!-- Password demo seragam: wgu123 (reset otomatis tiap upgrade). -->
+    <record id="wgu_user_admin_pusat" model="res.users">
+        <field name="name">Administrator Utama</field>
+        <field name="login">admin.pusat@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('wgu_water_management_system.group_wgu_admin_pusat'))]"/>
+    </record>
+    <record id="wgu_user_adminwgu" model="res.users">
+        <field name="name">Admin WGU (Superuser)</field>
+        <field name="login">adminwgu</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('base.group_system')), (4, ref('wgu_water_management_system.group_wgu_admin_pusat'))]"/>
+    </record>
+    <record id="wgu_user_spv_hendra" model="res.users">
+        <field name="name">Hendra Wijaya</field>
+        <field name="login">spv.sidoarjo@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('wgu_water_management_system.group_wgu_supervisor'))]"/>
+    </record>
+    <record id="wgu_petugas_rian" model="res.users">
+        <field name="name">Rian Hidayat</field>
+        <field name="login">rian.hidayat@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('group_wgu_petugas'))]"/>
+    </record>
+    <record id="wgu_petugas_dewi" model="res.users">
+        <field name="name">Dewi Lestari</field>
+        <field name="login">dewi.lestari@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('group_wgu_petugas'))]"/>
+    </record>
+    <record id="wgu_petugas_agus" model="res.users">
+        <field name="name">Agus Prasetyo</field>
+        <field name="login">agus.prasetyo@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('group_wgu_petugas'))]"/>
+    </record>
+    <record id="wgu_petugas_bayu" model="res.users">
+        <field name="name">Bayu Setiawan</field>
+        <field name="login">bayu.setiawan@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('group_wgu_petugas'))]"/>
+    </record>
+    <record id="wgu_petugas_siti" model="res.users">
+        <field name="name">Siti Rahmawati</field>
+        <field name="login">siti.rahmawati@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('group_wgu_petugas'))]"/>
+    </record>
+    <record id="wgu_petugas_dedi" model="res.users">
+        <field name="name">Dedi Kurniawan</field>
+        <field name="login">dedi.kurniawan@tirtalink.id</field>
+        <field name="password">wgu123</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user')), (4, ref('group_wgu_petugas'))]"/>
+    </record>
+
+    <!-- ===== 7. DEPARTEMEN & KARYAWAN HR (ikatan resmi hr.employee) ===== -->
+    <record id="hr_dept_pengolahan" model="hr.department">
+        <field name="name">Instalasi Pengolahan Air</field>
+    </record>
+    <record id="hr_dept_pengaliran" model="hr.department">
+        <field name="name">Pengaliran &amp; Reading Meter</field>
+    </record>
+
+    <record id="hr_emp_admin_pusat" model="hr.employee">
+        <field name="name">Administrator Utama</field>
+        <field name="user_id" ref="wgu_user_admin_pusat"/>
+        <field name="department_id" ref="hr_dept_pengolahan"/>
+        <field name="work_phone">0811-3300-0001</field>
+    </record>
+    <record id="hr_emp_hendra" model="hr.employee">
+        <field name="name">Hendra Wijaya</field>
+        <field name="user_id" ref="wgu_user_spv_hendra"/>
+        <field name="department_id" ref="hr_dept_pengaliran"/>
+        <field name="work_phone">0812-3300-0002</field>
+    </record>
+    <record id="hr_emp_rian" model="hr.employee">
+        <field name="name">Rian Hidayat</field>
+        <field name="user_id" ref="wgu_petugas_rian"/>
+        <field name="department_id" ref="hr_dept_pengaliran"/>
+        <field name="work_phone">0821-3300-0104</field>
+    </record>
+    <record id="hr_emp_dewi" model="hr.employee">
+        <field name="name">Dewi Lestari</field>
+        <field name="user_id" ref="wgu_petugas_dewi"/>
+        <field name="department_id" ref="hr_dept_pengaliran"/>
+        <field name="work_phone">0812-3300-0101</field>
+    </record>
+    <record id="hr_emp_agus" model="hr.employee">
+        <field name="name">Agus Prasetyo</field>
+        <field name="user_id" ref="wgu_petugas_agus"/>
+        <field name="department_id" ref="hr_dept_pengaliran"/>
+        <field name="work_phone">0813-3300-0102</field>
+    </record>
+    <record id="hr_emp_bayu" model="hr.employee">
+        <field name="name">Bayu Setiawan</field>
+        <field name="user_id" ref="wgu_petugas_bayu"/>
+        <field name="department_id" ref="hr_dept_pengolahan"/>
+        <field name="work_phone">0857-3300-0103</field>
+    </record>
+    <record id="hr_emp_siti" model="hr.employee">
+        <field name="name">Siti Rahmawati</field>
+        <field name="user_id" ref="wgu_petugas_siti"/>
+        <field name="department_id" ref="hr_dept_pengaliran"/>
+        <field name="work_phone">0812-3300-0105</field>
+    </record>
+    <record id="hr_emp_dedi" model="hr.employee">
+        <field name="name">Dedi Kurniawan</field>
+        <field name="user_id" ref="wgu_petugas_dedi"/>
+        <field name="department_id" ref="hr_dept_pengaliran"/>
+        <field name="work_phone">0856-3300-0106</field>
+    </record>
+
+    <!-- ===== 8. CONTOH BACAAN METER (GPS riil utk popup peta dashboard) ===== -->
+    <record id="bacaan_demo_siti" model="wgu.bacaan">
+        <field name="pelanggan_id" ref="wgu_dummy_1"/>
+        <field name="petugas_id" ref="wgu_petugas_rian"/>
+        <field name="meter_lalu">1000</field>
+        <field name="meter_baru">1015</field>
+        <field name="latitude">-7.315400</field>
+        <field name="longitude">112.704500</field>
+        <field name="kendala">normal</field>
+        <field name="catatan">Pembacaan rutin, meter area bersih.</field>
+        <field name="state">synced</field>
+    </record>
+    <record id="bacaan_demo_masjid" model="wgu.bacaan">
+        <field name="pelanggan_id" ref="wgu_dummy_3"/>
+        <field name="petugas_id" ref="wgu_petugas_dewi"/>
+        <field name="meter_lalu">4500</field>
+        <field name="meter_baru">4508</field>
+        <field name="latitude">-7.321000</field>
+        <field name="longitude">112.703200</field>
+        <field name="kendala">normal</field>
+        <field name="catatan">Pemakaian sosial rendah (hari kerja).</field>
+        <field name="state">synced</field>
+    </record>
+    <record id="bacaan_demo_ruko" model="wgu.bacaan">
+        <field name="pelanggan_id" ref="wgu_dummy_5"/>
+        <field name="petugas_id" ref="wgu_petugas_agus"/>
+        <field name="meter_lalu">700</field>
+        <field name="meter_baru">718</field>
+        <field name="latitude">-7.339800</field>
+        <field name="longitude">112.729500</field>
+        <field name="kendala">terkunci</field>
+        <field name="catatan">Gerbang ruko terkunci, baca dari jalan.</field>
+        <field name="state">synced</field>
+    </record>
+
+    <!-- ===== 9. PENUGASAN LAPANGAN (wgu.tugas) — data dummy dinamis.
+         Satu model dengan menu HP petugas (/pdam/api/tugas): apa yang
+         muncul di menu "Penugasan Lapangan" PC Admin 100% sama dengan
+         daftar tugas yang dilihat petugas di HP. ===== -->
+    <record id="tugas_demo_siti" model="wgu.tugas">
+        <field name="pelanggan_id" ref="wgu_dummy_1"/>
+        <field name="petugas_id" ref="wgu_petugas_rian"/>
+        <field name="wilayah">Sidoarjo Kota</field>
+        <field name="state">selesai</field>
+        <field name="bacaan_id" ref="bacaan_demo_siti"/>
+        <field name="catatan">Rutin awal bulan.</field>
+    </record>
+    <record id="tugas_demo_masjid" model="wgu.tugas">
+        <field name="pelanggan_id" ref="wgu_dummy_3"/>
+        <field name="petugas_id" ref="wgu_petugas_dewi"/>
+        <field name="wilayah">Sidoarjo Kota</field>
+        <field name="state">selesai</field>
+        <field name="bacaan_id" ref="bacaan_demo_masjid"/>
+    </record>
+    <record id="tugas_demo_ruko" model="wgu.tugas">
+        <field name="pelanggan_id" ref="wgu_dummy_5"/>
+        <field name="petugas_id" ref="wgu_petugas_agus"/>
+        <field name="wilayah">Sidoarjo Kota</field>
+        <field name="state">selesai</field>
+        <field name="bacaan_id" ref="bacaan_demo_ruko"/>
+        <field name="catatan">Pagar terkunci — baca dari jalan.</field>
+    </record>
+    <record id="tugas_demo_tegalan" model="wgu.tugas">
+        <field name="pelanggan_id" ref="wgu_dummy_2"/>
+        <field name="petugas_id" ref="wgu_petugas_bayu"/>
+        <field name="wilayah">Tegalan Timur</field>
+        <field name="state">baru</field>
+        <field name="catatan">Belum dibaca — antrean minggu ini.</field>
+    </record>
+    <record id="tugas_demo_industri" model="wgu.tugas">
+        <field name="pelanggan_id" ref="wgu_dummy_4"/>
+        <field name="petugas_id" ref="wgu_petugas_siti"/>
+        <field name="wilayah">Kawasan Industri</field>
+        <field name="state">dikerjakan</field>
+        <field name="catatan">Pelanggan besar, verifikasi angka di tempat.</field>
+    </record>
+    <record id="tugas_demo_siti_b2" model="wgu.tugas">
+        <field name="pelanggan_id" ref="wgu_dummy_1"/>
+        <field name="petugas_id" ref="wgu_petugas_dedi"/>
+        <field name="wilayah">Sidoarjo Kota</field>
+        <field name="state">baru</field>
+        <field name="catatan">Bacaan susulan (check anomaly).</field>
+    </record>
+</odoo>

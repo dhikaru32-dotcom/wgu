@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Kategori + group RBAC petugas lapangan (dasar dropdown "ID Akses
+         Petugas" pada portal mobile dan filter Data Petugas di backend). -->
+    <record id="wgu_category" model="ir.module.category">
+        <field name="name">WGU Water Management</field>
+        <field name="sequence">25</field>
+    </record>
+
+    <record id="group_wgu_petugas" model="res.groups">
+        <field name="name">Petugas Lapangan</field>
+        <field name="category_id" ref="wgu_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Akun petugas pembaca meter yang boleh login ke aplikasi mobile /pdam/meter-reading dan mengajukan Request PO lapangan.</field>
+    </record>
+
+    <!-- MANDAT 2026-10-15: RBAC tiga lapis sesuai role mockup. -->
+    <record id="group_wgu_supervisor" model="res.groups">
+        <field name="name">Supervisor</field>
+        <field name="category_id" ref="wgu_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_wgu_petugas'))]"/>
+        <field name="comment">Supervisor lapangan: validasi hasil baca + kelola penugasan.</field>
+    </record>
+
+    <record id="group_wgu_admin_pusat" model="res.groups">
+        <field name="name">Admin Pusat</field>
+        <field name="category_id" ref="wgu_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_wgu_supervisor'))]"/>
+        <field name="comment">Petugas administrasi kantor pusat: akses penuh data WGU (billing, chemical, petugas) tanpa setting sistem.</field>
+    </record>
+</odoo>

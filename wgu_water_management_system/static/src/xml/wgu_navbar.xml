@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- ============================================================
+         MANDAT PEMBENAHAN 2026-10-16: PERLUASAN RESMI template
+         web.NavBar.
+         - Waffle 9 titik bawaan Odoo tetap PALING KIRI (drawer aplikasi
+           + nama menu muncul saat mouse over).
+         - Judul "WGU Water Management" (tetes air) = teks murni,
+           non-clickable, tanpa fungsi link.
+         - Item menu kustom "Dashboard" (tanpa ikon) membuka halaman
+           Dashboard utama WGU via action_wgu_dashboard_utama.
+         - Tombol Back tersedia di setiap halaman backend; otomatis
+           disembunyikan di halaman utama Dashboard Field Data
+           (body.wgu-dashboard-active).
+         Handler JS: static/src/js/wgu_navbar_patch.js (patch NavBar).
+         ============================================================ -->
+    <t t-name="wgu_water_management.NavBar"
+       t-inherit="web.NavBar"
+       t-inherit-mode="extension"
+       owl="1">
+        <xpath expr="//nav[hasclass('o_main_navbar')]" position="attributes">
+            <attribute name="class" add="wgu-neo-navbar" separator=" "/>
+        </xpath>
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="after">
+            <!-- Waffle 9 titik tetap paling kiri (bawaan Odoo: buka drawer
+                 aplikasi, tooltip nama menu muncul saat hover). Item kustom
+                 disuntik SETELAH waffle sesuai mandat urutan 2026-10-16. -->
+            <button type="button" class="wgu-navbar-back" title="Kembali ke halaman sebelumnya"
+                    t-on-click="() => (this.wguBackHandle ? this.wguBackHandle() : window.history.back())">
+                <i class="fa fa-arrow-left"/>
+            </button>
+            <span class="wgu-navbar-brand" title="WGU Water Management">
+                <span class="wgu-brand-drop"><i class="fa fa-tint"/></span>
+                <span class="wgu-brand-text">WGU Water Management</span>
+            </span>
+        </xpath>
+    </t>
+</templates>

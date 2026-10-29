@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tampilan List Hasil Baca Meter Lapangan -->
+    <record id="view_wgu_bacaan_tree" model="ir.ui.view">
+        <field name="name">wgu.bacaan.tree</field>
+        <field name="model">wgu.bacaan</field>
+        <field name="arch" type="xml">
+            <tree string="Hasil Baca Meter" decoration-success="state == 'synced'" decoration-warning="state == 'pending'">
+                <field name="waktu_baca"/>
+                <field name="pelanggan_id"/>
+                <field name="petugas_id"/>
+                <field name="meter_lalu"/>
+                <field name="meter_baru"/>
+                <field name="pemakaian"/>
+                <field name="kendala"/>
+                <field name="dari_offline"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Tampilan Form Hasil Baca Meter -->
+    <record id="view_wgu_bacaan_form" model="ir.ui.view">
+        <field name="name">wgu.bacaan.form</field>
+        <field name="model">wgu.bacaan</field>
+        <field name="arch" type="xml">
+            <form string="Detail Baca Meter">
+                <sheet>
+                    <group>
+                        <group string="Pelanggan &amp; Petugas">
+                            <field name="pelanggan_id"/>
+                            <field name="petugas_id"/>
+                            <field name="waktu_baca"/>
+                            <field name="state"/>
+                        </group>
+                        <group string="Pembacaan">
+                            <field name="meter_lalu"/>
+                            <field name="meter_baru"/>
+                            <field name="pemakaian"/>
+                            <field name="kendala"/>
+                            <field name="dari_offline"/>
+                        </group>
+                    </group>
+                    <group string="Bukti Lapangan">
+                        <field name="latitude"/>
+                        <field name="longitude"/>
+                        <field name="foto_meter" widget="image"/>
+                        <field name="catatan"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wgu_bacaan" model="ir.actions.act_window">
+        <field name="name">Hasil Baca Meter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wgu.bacaan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- MANDAT 2026-10-15: Search View resmi — filter status selesai/belum
+         selesai + fitur "Group By" bawaan Odoo pada list view Field Data. -->
+    <record id="view_wgu_bacaan_search" model="ir.ui.view">
+        <field name="name">wgu.bacaan.search</field>
+        <field name="model">wgu.bacaan</field>
+        <field name="arch" type="xml">
+            <search string="Monitoring Baca Meter WGU">
+                <field name="pelanggan_id"/>
+                <field name="petugas_id"/>
+                <field name="kendala"/>
+                <field name="waktu_baca"/>
+                <field name="state"/>
+                <filter name="filter_synced" string="Selesai Dibaca (Synced)" domain="[('state', '=', 'synced')]"/>
+                <filter name="filter_pending" string="Belum Selesai (Pending Sync)" domain="[('state', '=', 'pending')]"/>
+                <filter name="filter_anomali" string="Hanya Anomali" domain="[('kendala', '!=', 'normal')]"/>
+                <separator/>
+                <filter name="filter_hari_ini" string="Dibaca Hari Ini" domain="[('waktu_baca', '&gt;=', (context_today() + relativedelta(days=-1)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="Status Penyelesaian" context="{'group_by': 'state'}"/>
+                    <filter name="group_petugas" string="Petugas" context="{'group_by': 'petugas_id'}"/>
+                    <filter name="group_sektor" string="Sektor Pelanggan" context="{'group_by': 'sektor'}"/>
+                    <filter name="group_kendala" string="Kendala Lapangan" context="{'group_by': 'kendala'}"/>
+                    <filter name="group_waktu" string="Tanggal Baca" context="{'group_by': 'waktu_baca:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- MANDAT 2026-10-16: klik "Bacaan Meter" langsung membuka halaman
+         Hasil Baca Lapangan — tanpa drop sub-menu. -->
+    <menuitem id="menu_wgu_bacaan_sub"
+              name="Bacaan Meter"
+              parent="menu_wgu_root"
+              action="action_wgu_bacaan"
+              sequence="15"/>
+
+    <!-- ============================================================
+         MANDAT PEMBENAHAN 2026-10-15: DASHBOARD KOMPREHENSIF BAWAAN
+         ODOO — Kanban + Pivot + Graph + List pada wgu.bacaan. Dibuka
+         lewat item navbar "Dashboard"; menu sequence 0 menjadikannya
+         landing page utama setelah login (Field Data = sequence 1).
+         ============================================================ -->
+    <record id="view_wgu_bacaan_kanban" model="ir.ui.view">
+        <field name="name">wgu.bacaan.kanban</field>
+        <field name="model">wgu.bacaan</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" records_draggable="false">
+                <field name="pelanggan_id"/>
+                <field name="pemakaian"/>
+                <field name="state"/>
+                <field name="waktu_baca"/>
+                <field name="petugas_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <b><field name="pelanggan_id"/></b>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                Pemakaian <field name="pemakaian"/> m³
+                            </div>
+                            <div class="o_kanban_record_bottom text-muted">
+                                <field name="waktu_baca"/> — <field name="petugas_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_wgu_bacaan_graph" model="ir.ui.view">
+        <field name="name">wgu.bacaan.graph</field>
+        <field name="model">wgu.bacaan</field>
+        <field name="arch" type="xml">
+            <graph type="bar">
+                <field name="sektor" type="row"/>
+                <field name="pemakaian" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_wgu_bacaan_pivot" model="ir.ui.view">
+        <field name="name">wgu.bacaan.pivot</field>
+        <field name="model">wgu.bacaan</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="sektor" type="row"/>
+                <field name="waktu_baca" interval="month" type="col"/>
+                <field name="pemakaian" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_wgu_dashboard_native" model="ir.actions.act_window">
+        <field name="name">Dashboard WGU</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wgu.bacaan</field>
+        <field name="view_mode">kanban,pivot,graph,tree,form</field>
+        <field name="search_view_id" ref="view_wgu_bacaan_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Dashboard komprehensif hasil baca meter</p>
+            <p>Kanban per status, Pivot pemakaian per sektor/bulan, Graph tren pemakaian, dan List laporan lengkap.</p>
+        </field>
+    </record>
+
+    <!-- ============================================================
+         MANDAT 2026-10-16: DASHBOARD UTAMA WGU — halaman kustom
+         (blok atas: bar chart kubikasi + pie status tugas; blok bawah:
+         tabel Jalur Komunikasi Internal, 10 baris/halaman, gulir maks
+         8 baris) yang dirender oleh client action
+         wgu_water_management.dashboard dengan params section=dashboard.
+         Menu sequence 0 menjadikannya landing page utama setelah login
+         (Field Data = menu terpisah, tidak diubah).
+         ============================================================ -->
+    <record id="action_wgu_dashboard_utama" model="ir.actions.client">
+        <field name="name">Dashboard</field>
+        <field name="tag">wgu_water_management.dashboard</field>
+        <field name="params" eval="{'section': 'dashboard'}"/>
+    </record>
+
+    <menuitem id="menu_wgu_dashboard_native"
+              name="Dashboard"
+              parent="menu_wgu_root"
+              action="action_wgu_dashboard_utama"
+              sequence="0"/>
+</odoo>

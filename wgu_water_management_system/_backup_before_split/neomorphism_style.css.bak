@@ -1,0 +1,1231 @@
+/* ================================================================
+   WGU Water Management — NEOMORPHISM THEME FOR ODOO 16
+   Scoped strictly under .wgu_neom_container to isolate from native Odoo
+   Source: Neomorphism/New folder (5)/index-neomorphism.html
+   Compiled autonomously by Master Orchestrator
+   ================================================================ */
+
+.wgu_neom_container {
+    /* Theme Tokens Scoped */
+    --odoo-purple:   #714B67;
+    --odoo-purple-d: #4A2E43;
+    --odoo-teal:     #00A09D;
+    --odoo-teal-d:   #017E84;
+    --odoo-success:  #28A745;
+    --odoo-danger:   #DC3545;
+    --odoo-warning:  #F0AD4E;
+    --odoo-info:     #1F6B8E;
+    --odoo-muted:    #64748B;
+    --odoo-border:   rgba(0,0,0,0.08);
+
+    --neo-bg:        #dff1fc;
+    --neo-bg2:       #cce9f8;
+    --neo-out:       -7px -7px 14px rgba(255,255,255,0.88), 7px 7px 14px rgba(12,110,138,0.18);
+    --neo-in:        inset -4px -4px 8px rgba(255,255,255,0.88), inset 4px 4px 8px rgba(12,110,138,0.18);
+    --neo-sm:        -4px -4px 8px rgba(255,255,255,0.85), 4px 4px 8px rgba(12,110,138,0.14);
+
+    --text-dark:     #1E293B;
+    --text-mid:      #2d5f7a;
+    --text-muted:    #64748B;
+    --text-light:    rgba(30,41,59,0.55);
+
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 13px;
+    background: linear-gradient(140deg, #dff1fc 0%, #c8e8f8 45%, #b0d8f2 100%);
+    min-height: calc(100vh - 50px);
+    color: var(--text-dark);
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.wgu_neom_container * {
+    box-sizing: border-box;
+}
+
+/* Nested and Scoped Components */
+
+.wgu_neom_container {
+    /* ================================================================
+           WGU Water Management — ODOO ENTERPRISE FRAMEWORK REPLICATION
+           THEME: LIGHT WATER NEOMORPHISM | TSLab Techno Solution
+           Fase 1 & 2 Preview — Field Service + Data Master + Accounting
+        ================================================================ */
+    
+        
+    
+        
+    
+        
+    
+        /* ========== ODOO ENTERPRISE TOP NAVBAR (Neomorphism) ========== */
+    
+        .o_main_navbar {
+            height: 46px;
+            background: linear-gradient(135deg, var(--odoo-purple) 0%, var(--odoo-purple-d) 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 0;
+            box-shadow: 0 4px 16px rgba(113,75,103,0.35);
+            position: relative;
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+        /* Waffle / Apps Grid Icon */
+        .o_menu_toggle {
+            width: 40px; height: 46px;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.75);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+            border-right: 1px solid rgba(255,255,255,0.12);
+            margin-right: 10px;
+        }
+        .o_menu_toggle:hover { color: white; background: rgba(255,255,255,0.08); }
+        /* Brand Logo + Name */
+        .o_menu_brand {
+            display: flex; align-items: center; gap: 8px;
+            color: white;
+            font-weight: 800;
+            font-size: 14.5px;
+            letter-spacing: -0.3px;
+            text-decoration: none;
+            padding-right: 16px;
+            border-right: 1px solid rgba(255,255,255,0.12);
+            margin-right: 6px;
+        }
+        .o_menu_brand .brand-dot {
+            width: 28px; height: 28px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        /* Nav Menu Sections */
+        .o_menu_sections {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+        .o_nav_entry {
+            padding: 0 14px;
+            height: 46px;
+            display: flex; align-items: center;
+            color: rgba(255,255,255,0.78);
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+        .o_nav_entry:hover { color: white; background: rgba(255,255,255,0.07); }
+        .o_nav_entry.active {
+            color: white;
+            font-weight: 800;
+            border-bottom-color: var(--odoo-teal);
+            background: rgba(255,255,255,0.06);
+        }
+        /* Systray (right side of navbar) */
+        .o_menu_systray {
+            display: flex; align-items: center; gap: 6px;
+            margin-left: auto;
+        }
+        .o_systray_item {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .o_systray_item:hover { background: rgba(255,255,255,0.1); color: white; }
+        .o_systray_notif {
+            position: absolute; top: 3px; right: 3px;
+            width: 7px; height: 7px;
+            background: var(--odoo-warning);
+            border-radius: 50%;
+            border: 1.5px solid var(--odoo-purple);
+        }
+        .o_user_avatar {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--odoo-teal), #006b68);
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        /* Network toggle in navbar */
+        .o_network_badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            border: 1px solid;
+            transition: all 0.3s;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+        .o_network_badge.online  { background: rgba(40,167,69,0.2); color: #98f0b0; border-color: rgba(40,167,69,0.4); }
+        .o_network_badge.offline { background: rgba(220,53,69,0.2); color: #ffaaaa; border-color: rgba(220,53,69,0.4); }
+    
+        /* ========== LAYOUT WRAPPER ========== */
+        .o_presentation_root {
+            display: flex;
+            height: calc(100vh - 46px);
+            width: 100%;
+        }
+    
+        /* ========== SISI KIRI: HQ ODOO PANEL ========== */
+        .o_action_manager {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(140deg, #dff1fc 0%, #c8e8f8 100%);
+        }
+    
+        /* ===== ODOO CONTROL PANEL ===== */
+        .o_control_panel {
+            position: relative;
+            z-index: 50;   /* FIX: dropdown Filters melayang di atas tabel */
+            background: rgba(255,255,255,0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(14,165,233,0.12);
+            padding: 8px 18px 0;
+            flex-shrink: 0;
+            box-shadow: 0 3px 12px rgba(12,110,138,0.07);
+        }
+        .o_cp_top {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding-bottom: 6px;
+            gap: 12px;
+        }
+        /* Odoo Breadcrumb */
+        .o_breadcrumb {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.4px;
+        }
+        .o_breadcrumb .o_back_btn {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--odoo-teal);
+            cursor: pointer;
+            display: flex; align-items: center; gap: 4px;
+            transition: color 0.2s;
+        }
+        .o_breadcrumb .o_back_btn:hover { color: var(--odoo-teal-d); }
+        .o_breadcrumb .o_breadcrumb_sep { color: var(--text-muted); font-size: 14px; }
+        /* View switcher icons (list/kanban/pivot/form) */
+        .o_view_switcher {
+            display: flex; gap: 2px;
+            background: rgba(0,0,0,0.04);
+            padding: 3px;
+            border-radius: 8px;
+            border: 1px solid rgba(14,165,233,0.1);
+        }
+        .o_view_btn {
+            width: 28px; height: 26px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 5px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .o_view_btn.active { background: white; color: var(--odoo-purple); box-shadow: var(--neo-sm); }
+        .o_view_btn:hover:not(.active) { background: rgba(255,255,255,0.5); }
+        /* CP Bottom (action buttons + search) */
+        .o_cp_bottom {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 6px 0 8px;
+            gap: 10px;
+        }
+        .o_cp_actions { display: flex; gap: 6px; align-items: center; }
+        /* Odoo-style action buttons */
+        .o_btn_create {
+            background: linear-gradient(135deg, var(--odoo-teal) 0%, var(--odoo-teal-d) 100%);
+            color: white; border: none; padding: 7px 16px;
+            border-radius: 20px; font-size: 12px; font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,160,157,0.28);
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .o_btn_create:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(0,160,157,0.38); }
+        .o_btn_action {
+            background: rgba(255,255,255,0.8);
+            color: var(--text-dark); border: 1px solid rgba(14,165,233,0.22);
+            padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+            cursor: pointer; box-shadow: var(--neo-sm);
+            transition: all 0.18s; white-space: nowrap;
+        }
+        .o_btn_action:hover { background: white; }
+        .o_btn_excel {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white; border: none; padding: 7px 14px;
+            border-radius: 20px; font-size: 12px; font-weight: 700;
+            cursor: pointer; box-shadow: 0 3px 10px rgba(22,163,74,0.25);
+            white-space: nowrap;
+        }
+        /* Odoo Search Bar */
+        .o_searchview {
+            display: flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.75);
+            border: 1.5px solid rgba(14,165,233,0.2);
+            border-radius: 20px;
+            padding: 5px 12px;
+            min-width: 220px;
+            box-shadow: var(--neo-sm);
+            transition: border-color 0.2s;
+        }
+        .o_searchview:focus-within { border-color: var(--odoo-teal); }
+        .o_searchview input {
+            border: none; background: transparent; outline: none;
+            font-size: 12px; color: var(--text-dark); flex: 1;
+            font-family: inherit;
+        }
+        .o_searchview i { color: var(--text-muted); font-size: 12px; }
+        .o_filters_btn {
+            padding: 6px 12px; border-radius: 16px;
+            background: rgba(255,255,255,0.7); border: 1px solid rgba(14,165,233,0.18);
+            font-size: 11px; font-weight: 600; color: var(--text-mid);
+            cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 5px;
+            box-shadow: var(--neo-sm);
+        }
+        .o_filters_btn:hover { background: white; }
+    
+        /* ===== ODOO VIEW CONTENT AREA ===== */
+        .o_content_area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .o_content_area::-webkit-scrollbar { width: 5px; }
+        .o_content_area::-webkit-scrollbar-track { background: transparent; }
+        .o_content_area::-webkit-scrollbar-thumb { background: rgba(14,165,233,0.25); border-radius: 4px; }
+    
+        .o_view_panel { display: none; flex-direction: column; gap: 14px; }
+        .o_view_panel.active { display: flex; }
+    
+        /* ========== ODOO BUTTON-BOX (Stat Buttons) ========== */
+        .o_button_box {
+            display: flex; gap: 8px; flex-wrap: wrap;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: var(--neo-out);
+        }
+        .o_stat_button {
+            display: flex; flex-direction: column; align-items: flex-start;
+            padding: 8px 16px; border-radius: 12px;
+            background: var(--neo-bg);
+            border: 1px solid rgba(255,255,255,0.55);
+            box-shadow: var(--neo-sm);
+            cursor: pointer; transition: all 0.18s;
+            min-width: 100px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .o_stat_button:hover { box-shadow: var(--neo-out); transform: translateY(-2px); }
+        .o_stat_button .o_field_widget { display: flex; flex-direction: column; gap: 2px; }
+        .o_stat_value {
+            font-size: 26px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .o_stat_info { display: flex; flex-direction: column; }
+        .o_stat_text {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+        .o_stat_button i { font-size: 18px; margin-bottom: 6px; opacity: 0.8; }
+    
+        /* ========== ODOO STATUS BAR (Pipeline Stages) ========== */
+        .o_form_statusbar {
+            display: flex; align-items: center;
+            background: rgba(255,255,255,0.7);
+            border-radius: 12px;
+            padding: 8px 14px;
+            border: 1px solid rgba(14,165,233,0.12);
+            box-shadow: var(--neo-sm);
+            gap: 2px;
+            overflow-x: auto;
+        }
+        .o_statusbar_status {
+            display: flex; align-items: center; gap: 2px; flex: 1;
+        }
+        .o_arrow_button {
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 16px 6px 22px;
+            font-size: 11px; font-weight: 700;
+            cursor: pointer; border: none;
+            position: relative; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%);
+            transition: all 0.2s;
+            background: rgba(0,0,0,0.06); color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .o_arrow_button:first-child { clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%); padding-left: 14px; }
+        .o_arrow_button.o_arrow_button_current {
+            background: var(--odoo-teal);
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,160,157,0.3);
+        }
+        .o_arrow_button.o_status_done {
+            background: rgba(40,167,69,0.18);
+            color: #15803d;
+        }
+        .o_arrow_button.o_status_warning {
+            background: rgba(240,173,78,0.2);
+            color: #92400e;
+        }
+        /* Status bar right side: date + action */
+        .o_statusbar_buttons { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+        .o_status_date { font-size: 10.5px; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+    
+        /* ========== ODOO LIST VIEW ========== */
+        .o_list_view {
+            background: rgba(255,255,255,0.68);
+            backdrop-filter: blur(14px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: var(--neo-out);
+            overflow: hidden;
+        }
+        .o_list_table {
+            width: 100%; border-collapse: collapse;
+        }
+        .o_list_table thead tr {
+            border-bottom: 2px solid rgba(14,165,233,0.1);
+            background: rgba(255,255,255,0.4);
+        }
+        .o_list_table th {
+            padding: 10px 14px;
+            font-size: 10.5px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.4px;
+            color: var(--text-muted); text-align: left;
+            white-space: nowrap; cursor: pointer;
+            user-select: none;
+        }
+        .o_list_table th.o_list_record_selector { width: 40px; cursor: default; }
+        .o_list_table th:hover:not(.o_list_record_selector) { color: var(--text-dark); }
+        .o_list_table th .o_sort_icon { opacity: 0; margin-left: 4px; font-size: 9px; }
+        .o_list_table th:hover .o_sort_icon { opacity: 0.5; }
+        .o_list_table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(14,165,233,0.06);
+            color: var(--text-dark); font-size: 12.5px;
+            vertical-align: middle;
+        }
+        .o_data_row:hover td { background: rgba(14,165,233,0.04); }
+        .o_data_row.o_selected_row td { background: rgba(0,160,157,0.06); }
+        .o_list_record_selector { text-align: center; }
+        .o_list_record_selector input[type="checkbox"] {
+            width: 14px; height: 14px; cursor: pointer;
+            accent-color: var(--odoo-teal);
+        }
+        /* Odoo List Footer */
+        .o_list_footer {
+            background: rgba(255,255,255,0.4);
+            border-top: 1px solid rgba(14,165,233,0.1);
+        }
+        .o_list_footer td {
+            padding: 9px 14px;
+            font-size: 11px; color: var(--text-muted); font-weight: 600;
+        }
+        .o_list_pager {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 16px;
+            border-top: 1px solid rgba(14,165,233,0.08);
+            background: rgba(255,255,255,0.35);
+            font-size: 11px; color: var(--text-muted);
+        }
+        .o_pager_btn {
+            width: 26px; height: 26px; border-radius: 6px;
+            border: 1px solid rgba(14,165,233,0.2);
+            background: rgba(255,255,255,0.7);
+            color: var(--text-mid); font-size: 11px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--neo-sm); transition: all 0.15s;
+        }
+        .o_pager_btn:hover { background: white; }
+        .o_pager_value { font-weight: 700; color: var(--text-dark); }
+    
+        /* Badge / Status Tags (Odoo style) */
+        .o_badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 10px; border-radius: 20px;
+            font-size: 10px; font-weight: 800;
+            white-space: nowrap; letter-spacing: 0.2px;
+        }
+        .o_badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+        .o_badge_success  { background: rgba(40,167,69,0.12);  color: #15803d; }
+        .o_badge_success::before  { background: #22c55e; }
+        .o_badge_warning  { background: rgba(240,173,78,0.15); color: #92400e; }
+        .o_badge_warning::before  { background: #f59e0b; }
+        .o_badge_danger   { background: rgba(220,53,69,0.12);  color: #991b1b; }
+        .o_badge_danger::before   { background: #ef4444; }
+        .o_badge_info     { background: rgba(31,107,142,0.12); color: #075985; }
+        .o_badge_info::before     { background: #0ea5e9; }
+        .o_badge_purple   { background: rgba(113,75,103,0.1);  color: var(--odoo-purple); }
+        .o_badge_purple::before   { background: var(--odoo-purple); }
+        .o_badge_synced   { background: rgba(0,160,157,0.12);  color: #065f4a; }
+        .o_badge_synced::before   { background: var(--odoo-teal); box-shadow: 0 0 4px var(--odoo-teal); }
+    
+        /* ========== ODOO FORM VIEW GROUPS ========== */
+        .o_form_container {
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(14px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: var(--neo-out);
+            padding: 20px;
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .o_form_sheet_bg { background: transparent; }
+        .o_group {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .o_group.o_group_col_1 { grid-template-columns: 1fr; }
+        .o_wrap_field { display: flex; flex-direction: column; gap: 4px; }
+        .o_form_label {
+            font-size: 10.5px; font-weight: 700;
+            color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .o_field_widget_input {
+            background: rgba(255,255,255,0.7);
+            border: 1.5px solid rgba(14,165,233,0.18);
+            padding: 9px 12px; border-radius: 10px;
+            font-size: 12.5px; color: var(--text-dark);
+            outline: none; width: 100%;
+            font-family: inherit; transition: border-color 0.2s;
+            box-shadow: var(--neo-in);
+        }
+        .o_field_widget_input:focus { border-color: var(--odoo-teal); }
+        .o_field_widget_input[readonly] { background: rgba(14,165,233,0.04); color: var(--text-mid); font-weight: 700; }
+        .o_section_title {
+            font-size: 11px; font-weight: 800;
+            color: var(--odoo-purple);
+            border-bottom: 2px solid rgba(113,75,103,0.18);
+            padding-bottom: 5px; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 4px;
+        }
+    
+        /* ========== ODOO CHATTER / LOG NOTE ========== */
+        .o_chatter {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.65);
+            box-shadow: var(--neo-sm);
+            overflow: hidden;
+        }
+        .o_chatter_topbar {
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.4);
+            border-bottom: 1px solid rgba(14,165,233,0.08);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .o_chatter_btn {
+            padding: 5px 12px; border-radius: 16px;
+            font-size: 11.5px; font-weight: 700;
+            border: 1px solid rgba(14,165,233,0.25);
+            background: var(--neo-bg); cursor: pointer;
+            box-shadow: var(--neo-sm); color: var(--text-dark);
+            transition: all 0.18s;
+        }
+        .o_chatter_btn:hover { box-shadow: var(--neo-out); }
+        .o_message_list { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; max-height: 160px; overflow-y: auto; }
+        .o_message {
+            display: flex; gap: 10px; align-items: flex-start;
+            padding: 8px 10px; border-radius: 10px;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(14,165,233,0.08);
+            font-size: 11.5px; color: var(--text-dark);
+        }
+        .o_message_avatar {
+            width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 800; color: white;
+        }
+        .o_message_body .o_message_author { font-weight: 700; font-size: 11px; }
+        .o_message_body .o_message_date  { font-size: 10px; color: var(--text-muted); margin-left: 6px; }
+        .o_message_body .o_message_text  { margin-top: 2px; line-height: 1.4; color: var(--text-mid); }
+    
+        /* ========== ODOO ACCOUNTING / INVOICE LEDGER ========== */
+        .o_account_section_title {
+            font-size: 11px; font-weight: 800; color: var(--odoo-purple);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid rgba(113,75,103,0.15);
+        }
+        .o_field_monetary {
+            font-weight: 700; color: var(--text-dark);
+            font-variant-numeric: tabular-nums;
+        }
+        .o_field_monetary.positive { color: var(--odoo-success); }
+        .o_invoice_totals {
+            border-top: 2px solid rgba(14,165,233,0.12);
+            padding-top: 10px;
+            display: flex; flex-direction: column; gap: 4px;
+            align-items: flex-end;
+        }
+        .o_total_row {
+            display: flex; gap: 20px; align-items: center;
+            font-size: 12px;
+        }
+        .o_total_row .label { color: var(--text-muted); font-weight: 600; min-width: 120px; text-align: right; }
+        .o_total_row .value { font-weight: 800; color: var(--text-dark); min-width: 100px; text-align: right; }
+        .o_total_row.o_total_grand .label,
+        .o_total_row.o_total_grand .value { font-size: 14px; color: var(--odoo-purple); }
+    
+        /* ========== ODOO FOOTER ========== */
+        .o_form_statusbar_view {
+            background: rgba(255,255,255,0.55);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.65);
+            box-shadow: var(--neo-sm);
+            padding: 12px 18px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .o_form_statusbar_view a { color: var(--odoo-purple); text-decoration: none; font-weight: 700; }
+    
+        /* ========== NEOMORPHISM UTILITIES ========== */
+        .neo-box {
+            background: var(--neo-bg); border-radius: 16px;
+            box-shadow: var(--neo-out);
+            border: 1px solid rgba(255,255,255,0.65);
+        }
+        .neo-card {
+            background: rgba(255,255,255,0.65); border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: var(--neo-sm);
+            transition: all 0.2s;
+        }
+        .neo-card:hover { box-shadow: var(--neo-out); transform: translateY(-1px); }
+        .neo-inset {
+            background: var(--neo-bg);
+            box-shadow: var(--neo-in);
+            border-radius: 10px;
+        }
+    
+        /* ========== SISI KANAN: HP SIMULATOR ========== */
+        .o_mobile_side {
+            width: 388px; min-width: 388px;
+            background: linear-gradient(180deg, rgba(14,165,233,0.06) 0%, rgba(6,182,212,0.04) 100%);
+            border-left: 1px solid rgba(14,165,233,0.12);
+            padding: 12px 12px 12px;
+            display: flex; flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+        .o_mobile_label {
+            font-size: 10px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--text-muted);
+            margin-bottom: 8px; align-self: flex-start;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .o_mobile_label .badge-live {
+            background: rgba(220,53,69,0.12); color: #991b1b;
+            padding: 1px 7px; border-radius: 10px; font-size: 9px;
+        }
+    
+        /* Bingkai HP Neomorphism */
+        .smartphone-frame {
+            width: 100%; max-width: 346px;
+            height: calc(100vh - 46px - 52px);
+            background: var(--neo-bg);
+            border-radius: 38px;
+            box-shadow: -14px -14px 28px rgba(255,255,255,0.92), 14px 14px 28px rgba(12,110,138,0.22);
+            border: 8px solid rgba(255,255,255,0.72);
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        /* Notch */
+        .phone-notch {
+            height: 26px; background: rgba(12,110,138,0.06);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .notch-cam { width: 9px; height: 9px; background: rgba(12,110,138,0.25); border-radius: 50%; margin-right: 5px; }
+        .notch-spk { width: 36px; height: 4px; background: rgba(12,110,138,0.18); border-radius: 4px; }
+        /* Status Bar */
+        .phone-statusbar {
+            height: 28px; padding: 0 14px;
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 10px; font-weight: 800; color: var(--text-mid);
+            background: rgba(255,255,255,0.4); flex-shrink: 0;
+        }
+        /* Body */
+        .phone-
+    
+        /* ====== LOGIN SCREEN HP ====== */
+        #m-login {
+            position: absolute; inset: 0; z-index: 500;
+            background: linear-gradient(160deg, #dff1fc 0%, #a5d8f0 55%, #7dd3fc 100%);
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: space-between; padding: 20px 20px 18px;
+            transition: opacity 0.42s ease, transform 0.42s ease;
+        }
+        #m-login.fade-exit { opacity: 0; transform: scale(0.94); pointer-events: none; }
+    
+        /* Water Ripple Aura */
+        .water-ripple-aura {
+            position: relative; width: 76px; height: 76px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+            box-shadow: 0 8px 22px rgba(14,165,233,0.4);
+            color: white; font-size: 28px;
+        }
+        .water-ripple-aura::before, .water-ripple-aura::after {
+            content: ''; position: absolute; inset: -8px;
+            border-radius: 50%;
+            border: 2px solid rgba(14,165,233,0.4);
+            animation: rippleWave 2.8s infinite ease-out;
+        }
+        .water-ripple-aura::after { inset: -17px; border-color: rgba(14,165,233,0.22); animation-delay: 1.4s; }
+        @keyframes rippleWave {
+            0% { transform: scale(0.82); opacity: 1; }
+            100% { transform: scale(1.75); opacity: 0; }
+        }
+        /* Extra rings (extra pseudo via wrapper div) */
+        .ripple-ring-extra {
+            position: absolute; inset: -28px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(14,165,233,0.1);
+            animation: rippleWave 2.8s infinite ease-out 0.9s;
+        }
+    
+        .login-title { font-size: 20px; font-weight: 900; color: var(--text-dark); letter-spacing: -0.5px; margin-top: 14px; }
+        .login-subtitle { font-size: 10px; color: var(--text-muted); font-weight: 600; }
+        .login-card { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        .login-field { display: flex; flex-direction: column; gap: 4px; }
+        .login-field label { font-size: 9.5px; font-weight: 800; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.5px; }
+        .login-inp {
+            width: 100%; padding: 10px 13px; border-radius: 12px;
+            border: none; outline: none; font-size: 12px; font-weight: 600;
+            color: var(--text-dark); font-family: inherit;
+            box-shadow: var(--neo-in); background: var(--neo-bg);
+        }
+        .btn-login-go {
+            width: 100%; padding: 12px; border-radius: 14px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white; font-size: 11.5px; font-weight: 900;
+            letter-spacing: 0.5px; border: none; cursor: pointer;
+            box-shadow: 0 5px 16px rgba(14,165,233,0.4);
+            transition: all 0.2s; margin-top: 4px;
+        }
+        .btn-login-go:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(14,165,233,0.5); }
+        .login-note { font-size: 9px; color: rgba(30,41,59,0.4); text-align: center; line-height: 1.5; }
+    
+        /* ====== APP SHELL ====== */
+        #m-app-shell { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+        #m-app-shell.visible { display: flex; }
+    
+        /* Navbar HP */
+        .m-navbar {
+            height: 44px; background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(14,165,233,0.1);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 12px; flex-shrink: 0; position: relative; z-index: 100;
+        }
+        .m-burger {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 12px; font-weight: 800; color: var(--text-dark);
+            cursor: pointer; padding: 5px 9px; border-radius: 9px;
+            background: rgba(14,165,233,0.07); border: 1px solid rgba(14,165,233,0.15);
+            transition: all 0.18s; flex-shrink: 0;
+        }
+        .m-burger:hover { background: rgba(14,165,233,0.13); }
+        .m-net-badge { font-size: 9px; font-weight: 800; padding: 3px 9px; border-radius: 16px; }
+        .m-net-badge.online  { background: rgba(40,167,69,0.1); color: #15803d; }
+        .m-net-badge.offline { background: rgba(220,53,69,0.12); color: #991b1b; }
+        /* Drawer */
+        .m-drawer {
+            display: none; position: absolute; top: 44px; left: 0; right: 0;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(14,165,233,0.18);
+            box-shadow: 0 10px 28px rgba(12,110,138,0.12); z-index: 200;
+            padding: 10px; grid-template-columns: repeat(4,1fr); gap: 8px;
+        }
+        .m-drawer.open { display: grid; }
+        .m-drawer-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            padding: 9px 5px; border-radius: 10px; cursor: pointer;
+            font-size: 10px; font-weight: 700; color: var(--text-dark);
+            transition: background 0.18s; text-align: center;
+        }
+        .m-drawer-item:hover { background: rgba(14,165,233,0.08); }
+        .m-drawer-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; }
+    
+        /* === SCROLL MANDIRI HP — PERBAIKAN BUG UTAMA === */
+        .mobile-workspace { flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none; }
+        .mobile-workspace::-webkit-scrollbar { display: none; }
+    
+        /* M-Screens */
+        .m-screen { display: none; }
+        .m-screen.active { display: block; }
+        .m-content { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    
+        /* Kanban Cards */
+        .m-kanban-card {
+            background: rgba(255,255,255,0.75); border-radius: 14px;
+            padding: 12px; border-left: 4px solid var(--odoo-warning);
+            position: relative; cursor: pointer;
+            box-shadow: 0 3px 10px rgba(12,110,138,0.07); transition: all 0.2s;
+            border-top: 1px solid rgba(255,255,255,0.8);
+            border-right: 1px solid rgba(255,255,255,0.6);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+        }
+        .m-kanban-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(12,110,138,0.12); }
+        .m-kanban-card.done   { border-left-color: var(--odoo-success); }
+        .m-kanban-card.failed { border-left-color: var(--odoo-danger); }
+        .m-kanban-badge { position: absolute; top: 10px; right: 10px; }
+    
+        /* Form Card */
+        .m-form-card {
+            background: rgba(255,255,255,0.72); border-radius: 16px;
+            padding: 14px; display: flex; flex-direction: column; gap: 10px;
+            box-shadow: 0 3px 12px rgba(12,110,138,0.07);
+            border: 1px solid rgba(255,255,255,0.78);
+        }
+        .m-sec-title {
+            font-size: 10px; font-weight: 800; color: var(--odoo-teal);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 2px solid rgba(0,160,157,0.14); padding-bottom: 4px;
+        }
+        .m-inp { display: flex; flex-direction: column; gap: 3px; }
+        .m-inp label { font-size: 10px; font-weight: 700; color: var(--text-muted); }
+        .m-inp input, .m-inp select, .m-inp textarea {
+            background: rgba(255,255,255,0.65); border: 1.5px solid rgba(14,165,233,0.18);
+            padding: 8px 11px; border-radius: 9px; font-size: 12px; color: var(--text-dark);
+            outline: none; font-family: inherit; width: 100%;
+            transition: border-color 0.18s; box-shadow: var(--neo-in);
+        }
+        .m-inp input:focus, .m-inp select:focus { border-color: var(--odoo-teal); }
+        .m-inp input[readonly] { background: rgba(14,165,233,0.05); color: var(--text-mid); font-weight: 700; }
+        .cam-box {
+            background: #0c1f2e; height: 120px; border-radius: 12px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; gap: 6px; position: relative; overflow: hidden; transition: background 0.3s;
+        }
+        .ocr-laser {
+            position: absolute; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, #0ea5e9, #38bdf8, #0ea5e9, transparent);
+            box-shadow: 0 0 10px #0ea5e9; display: none;
+            animation: laserScan 2s linear infinite;
+        }
+        @keyframes laserScan { 0% { top: 0%; } 50% { top: 90%; } 100% { top: 0%; } }
+        .anomali-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+        .anomali-btn {
+            padding: 9px 3px; border-radius: 10px;
+            background: rgba(255,255,255,0.65); border: 1.5px solid rgba(14,165,233,0.16);
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            font-size: 9.5px; font-weight: 700; color: var(--text-mid);
+            cursor: pointer; transition: all 0.17s; text-align: center;
+            box-shadow: var(--neo-sm);
+        }
+        .anomali-btn:hover { background: rgba(255,255,255,0.9); }
+        .anomali-btn.selected { background: rgba(14,165,233,0.12); border-color: var(--odoo-teal); color: var(--text-dark); box-shadow: var(--neo-in); }
+        .anomali-btn i { font-size: 15px; }
+        .m-btn-submit {
+            background: linear-gradient(135deg, #059669, #0d9488); color: white;
+            border: none; padding: 12px; border-radius: 12px; font-weight: 900;
+            font-size: 12px; letter-spacing: 0.4px; width: 100%; cursor: pointer;
+            box-shadow: 0 5px 14px rgba(5,150,105,0.3); transition: all 0.2s;
+        }
+        .m-btn-submit:hover { transform: translateY(-2px); box-shadow: 0 7px 18px rgba(5,150,105,0.4); }
+        .m-alert-warn {
+            background: rgba(240,173,78,0.1); border: 1.5px solid rgba(240,173,78,0.25);
+            border-radius: 9px; padding: 8px 11px; font-size: 10.5px; color: #92400e;
+            font-weight: 600; display: none;
+        }
+        /* Bottom Nav */
+        .m-bottom-nav {
+            height: 50px; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(14,165,233,0.1);
+            display: flex; justify-content: space-around; align-items: center; flex-shrink: 0;
+        }
+        .m-nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            font-size: 9px; font-weight: 700; color: var(--text-muted);
+            cursor: pointer; flex: 1; height: 100%; justify-content: center;
+            transition: color 0.18s;
+        }
+        .m-nav-item i { font-size: 16px; }
+        .m-nav-item.active { color: var(--odoo-teal); }
+    
+        /* ========== MANAJEMEN PETUGAS LAPANGAN ========== */
+        .pet-actions { display: flex; gap: 6px; }
+        .pet_btn {
+            width: 30px; height: 28px; border-radius: 8px;
+            border: 1px solid rgba(14,165,233,0.22); background: rgba(255,255,255,0.85);
+            box-shadow: var(--neo-sm);
+            font-size: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.18s;
+        }
+        .pet_btn:hover { background: #ffffff; transform: translateY(-1px); }
+        .pet_btn.edit { color: var(--odoo-teal); }
+        .pet_btn.tgl-on { color: #15803d; }
+        .pet_btn.tgl-off { color: var(--text-muted); }
+        .pet_btn.del { color: var(--odoo-danger); }
+        .pet-row-off td:not(:last-child) { opacity: 0.5; }
+        select.login-inp { cursor: pointer; font-size: 11px; }
+    
+        /* ========== ROLE AKSES + INVENTORY + SWIPE CARDS (Light Water) ========== */
+        .o_group.o_group_3 { grid-template-columns: repeat(3, 1fr); }
+        .o_role_note { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .o_role_note.ok { color: #15803d; }
+        .o_inv_head { flex-wrap: wrap; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; background: rgba(255,255,255,0.4); border-bottom: 2px solid rgba(14,165,233,0.1); }
+        .o_inv_title { font-size: 12px; font-weight: 800; color: var(--odoo-purple); text-transform: uppercase; letter-spacing: 0.4px; }
+        .o_inv_status { font-weight: 800; font-size: 12px; white-space: nowrap; }
+        .o_inv_status.ok { color: #15803d; }
+        .o_inv_status.alert { color: #991b1b; animation: pulse 2s infinite; }
+        .o_row_reorder td { background: rgba(220,53,69,0.06); }
+    
+        /* --- Mobile: horizontal swipe cards --- */
+        .swipe-card-container {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+            gap: 14px; padding-bottom: 12px; scrollbar-width: none; -ms-overflow-style: none;
+            align-items: flex-start; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+        }
+        .swipe-card-container::-webkit-scrollbar { display: none; }
+        .swipe-card-container.dragging { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+        .step-container { flex: 0 0 92%; scroll-snap-align: start; width: 92%; }
+        .swipe-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .swipe-info { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; }
+        .swipe-title { font-size: 10px; font-weight: 800; color: var(--text-mid); text-align: center; white-space: nowrap; }
+        .swipe-dots { display: flex; gap: 6px; align-items: center; }
+        .swipe-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(12,110,138,0.25); cursor: pointer; transition: all 0.25s; }
+        .swipe-dot.active { width: 18px; border-radius: 6px; background: var(--odoo-teal); }
+        .swipe-arrow {
+            width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.75); background: var(--neo-bg); color: var(--odoo-teal-d);
+            box-shadow: var(--neo-sm); cursor: pointer; font-size: 11px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.18s;
+        }
+        .swipe-arrow:active { box-shadow: var(--neo-in); }
+        .swipe-arrow:disabled { opacity: 0.35; cursor: default; }
+    
+        /* ========== TABEL SCROLL HORIZONTAL + INVENTORY CRUD ========== */
+        .data-table-container { overflow-x: auto; white-space: nowrap; max-width: 100%; scrollbar-width: thin; scrollbar-color: rgba(14,165,233,0.35) transparent; }
+        .data-table-container::-webkit-scrollbar { height: 6px; }
+        .data-table-container::-webkit-scrollbar-thumb { background: rgba(14,165,233,0.35); border-radius: 4px; }
+        .data-table-container table { min-width: 100%; table-layout: auto; }
+        .o_list_view table.o_list_table { table-layout: auto; width: 100%; min-width: 900px; }
+        .data-table-container table#bill-table,
+        #bill-table-body,
+        .o_list_view #view-billing table.o_list_table { min-width: 1100px !important; width: 100%; table-layout: auto; }
+        #inventory-table-body tr { cursor: pointer; }
+        .o_data_row.o_row_selected td { background: rgba(0,160,157,0.16); }
+        .po-total { font-size: 20px; font-weight: 900; color: var(--odoo-teal-d); text-align: right; font-variant-numeric: tabular-nums; }
+    
+        /* ========== GLOBAL ANIMATIONS ========== */
+        @keyframes fadeSlideIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .anim-in { animation: fadeSlideIn 0.32s ease forwards; }
+        .step-locked   { opacity: 0.35; pointer-events: none; transition: opacity 0.4s; }
+        .step-unlocked { opacity: 1;    pointer-events: auto; transition: opacity 0.4s; }
+        @keyframes floatBob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-5px); } }
+        @keyframes blinkWarning { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        /* ========== FILTER DROPDOWN (melayang di atas tabel) ========== */
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 170px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(14,165,233,0.22);
+            box-shadow: 0 10px 28px rgba(12,110,138,0.28);
+            z-index: 2000;
+        }
+        .filter-dropdown.show { display: block; animation: fadeSlideIn 0.18s ease; }
+        .filter-dropdown label { font-size: 11.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; color: var(--text-dark); white-space: nowrap; }
+    
+        /* ========== CP ACTION DROPDOWN MENU (Aksi Stok & Aksi Supplier) ========== */
+        .cp-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            min-width: 220px;
+            padding: 8px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, #eaf5fc 100%);
+            border: 1px solid rgba(14,165,233,0.22);
+            box-shadow: -10px -10px 24px rgba(255,255,255,0.9), 14px 14px 32px rgba(12,110,138,0.25);
+            z-index: 2000;
+        }
+        .cp-dropdown-menu.show { display: block; animation: fadeSlideIn 0.18s ease; }
+        .cp-drop-item {
+            padding: 9px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.18s;
+        }
+        .cp-drop-item:hover {
+            background: rgba(14,165,233,0.10);
+            transform: translateX(2px);
+        }
+        .cp-drop-item i { font-size: 12.5px; }
+        .danger-text { color: var(--odoo-danger); }
+        .danger-text:hover { background: rgba(220,53,69,0.10); }
+    
+        /* ========== GPS LINK + MODAL (Light Water Neomorphism) ========== */
+        .gps-link { cursor: pointer; color: var(--odoo-teal); font-weight: 700; border-bottom: 1px dashed rgba(0,160,157,0.5); transition: all 0.2s; }
+        .gps-link:hover { color: var(--odoo-teal-d); }
+        .gps-modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(12,40,60,0.38);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .gps-modal-overlay.show { display: flex; animation: fadeSlideIn 0.2s ease; }
+        .gps-modal-card {
+            width: 400px; max-width: calc(100vw - 32px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.94) 0%, #dff1fc 100%);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.85);
+            border-radius: 18px;
+            box-shadow: -10px -10px 24px rgba(255,255,255,0.75), 12px 12px 30px rgba(12,110,138,0.30);
+            padding: 18px 20px 20px;
+        }
+        .gps-modal-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(14,165,233,0.12); padding-bottom: 10px; margin-bottom: 14px; }
+        .gps-modal-title { font-weight: 800; color: var(--odoo-teal); font-size: 14px; }
+        .gps-modal-x {
+            cursor: pointer; color: var(--text-muted); font-size: 14px;
+            width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--neo-bg); box-shadow: var(--neo-sm);
+            border: 1px solid rgba(255,255,255,0.7);
+            transition: all 0.18s;
+        }
+        .gps-modal-x:hover { color: var(--odoo-danger); box-shadow: var(--neo-out); }
+        .gps-modal-x:active { box-shadow: var(--neo-in); }
+        .gps-map { position: relative; height: 200px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.85); box-shadow: var(--neo-in); }
+        .gps-map svg { width: 100%; height: 100%; display: block; }
+        .gps-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -88%); color: #e83e8c; font-size: 34px; filter: drop-shadow(0 6px 8px rgba(12,110,138,0.35)); line-height: 1; }
+        .gps-pin i { display: block; animation: floatBob 2s ease-in-out infinite; }
+        .gps-pulse { transform-origin: 200px 100px; animation: gpsPulse 2.2s ease-out infinite; }
+        @keyframes gpsPulse { 0% { transform: scale(0.4); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
+        .gps-modal-info { margin-top: 14px; font-size: 11.5px; color: var(--text-muted); text-align: center; line-height: 1.6; }
+        .gps-modal-info b { color: var(--text-mid); }
+        /* Tombol Tutup gaya neomorphism cerah */
+        .gps-modal-card .o_btn_create {
+            background: var(--neo-bg); color: var(--odoo-teal-d);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: var(--neo-sm);
+            padding: 8px 22px;
+        }
+        .gps-modal-card .o_btn_create:hover { transform: none; box-shadow: var(--neo-out); }
+        .gps-modal-card .o_btn_create:active { box-shadow: var(--neo-in); }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    
+        /* === PREMIUM PURCHASE MODAL NEOMORPHISM === */
+        .purchase-modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 99999;
+            align-items: center; justify-content: center;
+        }
+        .purchase-modal-overlay.show { display: flex; animation: fadeSlideIn 0.28s ease; }
+        .purchase-modal-card {
+            width: 480px; max-width: calc(100vw - 32px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, #e8f4fc 100%);
+            border: 1px solid rgba(255,255,255,0.95);
+            border-radius: 22px;
+            box-shadow: -12px -12px 30px rgba(255,255,255,0.95), 16px 16px 36px rgba(12,110,138,0.28);
+            padding: 22px 24px 24px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .purchase-modal-head { display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgba(14,165,233,0.15); padding-bottom:12px; margin-bottom:16px; }
+        .purchase-modal-title { font-weight:900; color:var(--odoo-teal-d); font-size:15px; letter-spacing:-0.2px; }
+        .purchase-modal-x { cursor:pointer; color:var(--text-muted); font-size:18px; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--neo-bg); box-shadow:var(--neo-sm); border:1px solid rgba(255,255,255,0.75); transition:all 0.18s; }
+        .purchase-modal-x:hover { color:var(--odoo-danger); box-shadow:var(--neo-out); }
+        .purchase-modal-x:active { box-shadow:var(--neo-in); }
+        .customer-history-card { width: min(92vw, 680px); }
+    
+        /* === CHEMICAL CRUD MODAL NEOMORPHISM === */
+        .chem-modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 99999; align-items: center; justify-content: center;
+        }
+        .chem-modal-overlay.show { display:flex; animation: fadeSlideIn 0.25s ease; }
+        .chem-modal-card {
+            width: 520px; max-width: calc(100vw - 32px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, #e8f4fc 100%);
+            border: 1px solid rgba(255,255,255,0.95);
+            border-radius: 20px;
+            box-shadow: -12px -12px 30px rgba(255,255,255,0.92), 16px 16px 36px rgba(12,110,138,0.25);
+            padding: 22px 24px;
+        }
+        .chem-modal-head { display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgba(14,165,233,0.15); padding-bottom:10px; margin-bottom:16px; }
+        .chem-modal-title { font-weight:900; color:var(--odoo-purple); font-size:15px; }
+        .chem-modal-x { cursor:pointer; color:var(--text-muted); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--neo-bg); box-shadow:var(--neo-sm); border:1px solid rgba(255,255,255,0.7); transition:all 0.18s; }
+        .chem-modal-x:hover { color:var(--odoo-danger); box-shadow:var(--neo-out); }
+    
+        /* === SUPPLIER MODAL NEOMORPHISM === */
+        .sup-modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 99999; align-items: center; justify-content: center;
+        }
+        .sup-modal-overlay.show { display:flex; animation: fadeSlideIn 0.25s ease; }
+        .sup-modal-card {
+            width: 520px; max-width: calc(100vw - 32px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, #e8f4fc 100%);
+            border: 1px solid rgba(255,255,255,0.95);
+            border-radius: 20px;
+            box-shadow: -12px -12px 30px rgba(255,255,255,0.92), 16px 16px 36px rgba(12,110,138,0.25);
+            padding: 22px 24px;
+        }
+        .sup-modal-head { display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid rgba(14,165,233,0.15); padding-bottom:10px; margin-bottom:16px; }
+        .sup-modal-title { font-weight:900; color:var(--odoo-teal-d); font-size:15px; }
+        .sup-modal-x { cursor:pointer; color:var(--text-muted); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--neo-bg); box-shadow:var(--neo-sm); border:1px solid rgba(255,255,255,0.7); transition:all 0.18s; }
+        .sup-modal-x:hover { color:var(--odoo-danger); box-shadow:var(--neo-out); }
+        .sup-table-wrap { margin-top: 6px; }
+    
+        /* === USER MENU DROPDOWN NEOMORPHISM === */
+        .user-menu-dropdown {
+            position: absolute; top: calc(100% + 8px); right: 0;
+            min-width: 220px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, #e8f4fc 100%);
+            border: 1px solid rgba(255,255,255,0.95);
+            border-radius: 14px;
+            box-shadow: -10px -10px 24px rgba(255,255,255,0.85), 12px 12px 28px rgba(12,110,138,0.22);
+            padding: 6px 0;
+            z-index: 99998;
+            animation: fadeSlideIn 0.18s ease;
+        }
+        .user-menu-item {
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex; align-items: center;
+        }
+        .user-menu-item:hover { background: rgba(14,165,233,0.08); }
+    
+        /* === HQ FULLSCREEN LOGIN SCREEN NEOMORPHISM === */
+        #hq-login-screen {
+            display: none;
+            position: fixed; inset: 0;
+            background: linear-gradient(140deg, #dff1fc 0%, #c8e8f8 45%, #b0d8f2 100%);
+            z-index: 100000;
+            align-items: center; justify-content: center;
+            flex-direction: column;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        #hq-login-screen.show { display: flex; }
+        .hq-login-card {
+            width: 420px; max-width: calc(100vw - 40px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, #eef7fd 100%);
+            border: 1px solid rgba(255,255,255,0.95);
+            border-radius: 24px;
+            box-shadow: -16px -16px 40px rgba(255,255,255,0.95), 20px 20px 44px rgba(12,110,138,0.3);
+            padding: 30px 32px;
+        }
+        .hq-login-brand {
+            display: flex; align-items: center; gap: 12px; justify-content: center; margin-bottom: 20px;
+        }
+        .hq-login-logo {
+            width: 52px; height: 52px; border-radius: 14px;
+            background: linear-gradient(135deg, var(--odoo-teal), #017E84);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 24px;
+            box-shadow: 0 6px 20px rgba(0,160,157,0.4);
+        }
+        .hq-login-title { font-weight: 900; font-size: 18px; color: var(--text-dark); letter-spacing: -0.3px; }
+        .hq-login-sub { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: -10px; margin-bottom: 22px; }
+        .hq-login-field { margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px; }
+        .hq-login-field label { font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+        .hq-login-field input, .hq-login-field select {
+            background: var(--neo-bg);
+            border: 1.5px solid rgba(14,165,233,0.18);
+            padding: 11px 14px; border-radius: 12px;
+            font-size: 13px; color: var(--text-dark);
+            outline: none; width: 100%;
+            font-family: inherit;
+            box-shadow: var(--neo-in);
+        }
+        .hq-login-field input:focus, .hq-login-field select:focus { border-color: var(--odoo-teal); }
+        .hq-login-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--odoo-teal) 0%, var(--odoo-teal-d) 100%);
+            color: white; font-size: 12.5px; font-weight: 800;
+            letter-spacing: 0.5px; border: none; cursor: pointer;
+            box-shadow: 0 5px 16px rgba(0,160,157,0.35);
+            transition: all 0.2s; margin-top: 8px;
+        }
+        .hq-login-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 22px rgba(0,160,157,0.45); }
+        .hq-login-note { font-size: 9.5px; color: var(--text-muted); text-align: center; margin-top: 14px; line-height: 1.5; }
+    
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1100px) {
+            .o_mobile_side { width: 340px; min-width: 340px; }
+        }
+        @media (max-width: 860px) {
+            .o_presentation_root { flex-direction: column; height: auto; }
+            .o_action_manager { overflow-y: visible; }
+            .o_mobile_side { width: 100%; min-width: unset; }
+            .smartphone-frame { max-width: 360px; height: 660px; }
+        }
+}
